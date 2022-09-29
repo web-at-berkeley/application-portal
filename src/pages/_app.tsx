@@ -13,20 +13,17 @@ import {
 import NextNProgress from "nextjs-progressbar";
 import { ErrorBoundary } from "react-error-boundary";
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { ConvexReactClient } from "convex/react";
-import { ConvexProviderWithAuth0 } from "convex/react-auth0";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-import convexConfig from "../../convex.json";
 import clientConfig from "../../convex/_generated/clientConfig";
 import { theme } from "../utils/theme";
 
 const convex = new ConvexReactClient(clientConfig);
-const authInfo = convexConfig.authInfo[0];
 
 export default function WeeklyApp({ Component, pageProps }: AppProps) {
   const { onClose } = useDisclosure();
   return (
-    <ConvexProviderWithAuth0 client={convex} authInfo={authInfo}>
+    <ConvexProvider client={convex}>
       <ChakraProvider theme={theme}>
         <ErrorBoundary
           FallbackComponent={() => (
@@ -52,6 +49,6 @@ export default function WeeklyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </ErrorBoundary>
       </ChakraProvider>
-    </ConvexProviderWithAuth0>
+    </ConvexProvider>
   );
 }
