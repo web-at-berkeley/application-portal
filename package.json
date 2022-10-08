@@ -1,5 +1,5 @@
 {
-  "name": "TODO",
+  "name": "convex",
   "private": true,
   "scripts": {
     "dev": "next dev",
