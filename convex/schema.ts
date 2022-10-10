@@ -67,6 +67,26 @@ export default defineSchema({
           type: s.literal("multiSelect"),
           adminOnly: s.boolean(),
           options: s.array(s.string()),
+        }),
+        s.object({
+          type: s.literal("longText"),
+          adminOnly: s.boolean(),
+          maxLength: s.number(),
+        }),
+        s.object({
+          type: s.literal("multipleChoice"),
+          adminOnly: s.boolean(),
+          options: s.array(s.string()),
+        }),
+        s.object({
+          type: s.literal("checkbox"),
+          adminOnly: s.boolean(),
+          options: s.array(s.string()),
+        }),
+        s.object({
+          type: s.literal("upload"),
+          adminOnly: s.boolean(),
+          url: s.string(),
         })
       )
     ),
