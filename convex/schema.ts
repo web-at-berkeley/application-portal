@@ -1,4 +1,35 @@
-import {defineSchema, defineTable, s} from "convex/schema";
+import { defineSchema, defineTable, s } from "convex/schema";
+
+// TODO: delete
+const data = {
+  id: "3lhnl253",
+  title: "WDB Application",
+  fields: {
+    "First Name": {
+      type: "shortText",
+      adminOnly: false,
+    },
+    "Application Stage": {
+      type: "multiSelect",
+      adminOnly: true,
+      extraInfo: {
+        options: ["Interviewing", "Accepted", "Rejected"],
+      },
+    },
+    // other fields
+  },
+};
+
+// for the submissions table:
+const b = {
+  user: "325h2pojfds", // user id
+  application: "3lhnl253", // application id
+  submitted: true,
+  fields: {
+    "First Name": "Anish",
+    "Application Stage": "Accepted",
+  },
+};
 
 export default defineSchema({
   // table for users
@@ -13,9 +44,9 @@ export default defineSchema({
     // TODO:  the actual pictures
     profilePic: s.string(),
     // TODO: find out whether this solves the uniqueness problem or not
-    //TODO s.id(???), HOW DO WE MAKE SURE IT'S UNIQUE
+    // TODO s.id(???), HOW DO WE MAKE SURE IT'S UNIQUE
     // does convex make it unique by default?
-    tokenIdentifier: s.string() // TODO: or s.id("users")
+    tokenIdentifier: s.string(), // TODO: or s.id("users")
   }),
   //
   applications: defineTable({
@@ -24,11 +55,21 @@ export default defineSchema({
     title: s.string(),
     // TODO: are applications connected to users or not?
     user: s.id("users"),
-    fields: s.object({
-      type: s.string(),
-      adminOnly: s.boolean(),
-      options: s.array(s.literal(string))
-    })
+    fields: s.map(
+      s.string(),
+      s.union(
+        s.object({
+          type: s.literal("shortText"),
+          adminOnly: s.boolean(),
+          maxLength: s.number(),
+        }),
+        s.object({
+          type: s.literal("multiSelect"),
+          adminOnly: s.boolean(),
+          options: s.array(s.string()),
+        })
+      )
+    ),
   }),
   //
   submissions: defineTable({
@@ -36,11 +77,12 @@ export default defineSchema({
     application: s.id("applications"),
     submitted: s.boolean(),
     // TODO clarify the EXACT fields structure and their types
-    fields: s.array(s.object({
-      name: s.string(),
-      value: s.string(),
-      adminOnly: s.boolean()
-    }))
+    fields: s.array(
+      s.object({
+        name: s.string(),
+        value: s.string(),
+        adminOnly: s.boolean(),
+      })
+    ),
   }),
 });
-
