@@ -1,33 +1,62 @@
 import { defineSchema, defineTable, s } from "convex/schema";
 
-// TODO: delete
-const data = {
-  id: "3lhnl253",
+// TODO: delete these (example data)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const exampleApplication = {
   title: "WDB Application",
-  fields: {
-    "First Name": {
-      type: "shortText",
-      adminOnly: false,
-    },
-    "Application Stage": {
+  adminFields: [
+    {
+      name: "Application Stage",
       type: "multiSelect",
-      adminOnly: true,
-      extraInfo: {
-        options: ["Interviewing", "Accepted", "Rejected"],
-      },
+      options: ["Interviewing", "Accepted", "Rejected"],
     },
-    // other fields
-  },
+  ],
+  steps: [
+    {
+      name: "Personal Information",
+      fields: [
+        {
+          name: "First Name", // table header in admin view
+          title: "First name", // title in application form
+          description: "", // description in application form
+          type: "shortText",
+          maxLength: 14,
+        },
+        {
+          name: "Essay #1",
+          title: "Why do you want to join WDB?",
+          description: "Use 250 words or less.",
+          type: "longText",
+          wordLimit: 250,
+        },
+      ],
+    },
+    {
+      name: "Branch Preferences",
+      fields: [
+        {
+          name: "Branch Preference",
+          title: "Which branch do you prefer?",
+          description: "Select all that apply.",
+          type: "multiSelect",
+          options: ["Industry", "Bootcamp", "Design"],
+        },
+      ],
+    },
+  ],
 };
 
 // for the submissions table:
-const b = {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const exampleSubmission = {
   user: "325h2pojfds", // user id
   application: "3lhnl253", // application id
   submitted: true,
   fields: {
     "First Name": "Anish",
+    "Essay #1": "alwkejhlkajgh",
     "Application Stage": "Accepted",
+    "Branch Preference": ["Industry", "Design", "Bootcamp"],
   },
 };
 
@@ -36,53 +65,102 @@ export default defineSchema({
   users: defineTable({
     firstName: s.string(),
     lastName: s.string(),
-    // TODO: https://docs.convex.dev/api/interfaces/server.UserIdentity#email
     // TODO: find out how to protect against malicious input from the user
     email: s.string(),
     isAdmin: s.boolean(),
-    // TODO: find out if this should be a URL or not and WHERE we need to store
-    // TODO:  the actual pictures
-    profilePic: s.string(),
-    // TODO: find out whether this solves the uniqueness problem or not
-    // TODO s.id(???), HOW DO WE MAKE SURE IT'S UNIQUE
-    // does convex make it unique by default?
-    tokenIdentifier: s.string(), // TODO: or s.id("users")
+    profilePic: s.string(), // url
+    tokenIdentifier: s.string(), // TODO: add index on this field
   }),
-  //
   applications: defineTable({
-    // TODO: clarify how ids for the table within a table work
-    id: s.id("applications"),
     title: s.string(),
-    // TODO: are applications connected to users or not?
-    user: s.id("users"),
-    fields: s.map(
-      s.string(),
+    adminFields: s.array(
       s.union(
         s.object({
+          name: s.string(),
           type: s.literal("shortText"),
-          adminOnly: s.boolean(),
           maxLength: s.number(),
         }),
         s.object({
+          name: s.string(),
           type: s.literal("multiSelect"),
-          adminOnly: s.boolean(),
           options: s.array(s.string()),
+        }),
+        s.object({
+          name: s.string(),
+          type: s.literal("longText"),
+        }),
+        s.object({
+          name: s.string(),
+          type: s.literal("multipleChoice"),
+          options: s.array(s.string()),
+        }),
+        s.object({
+          name: s.string(),
+          type: s.literal("checkbox"), // single checkbox
+        }),
+        s.object({
+          name: s.string(),
+          type: s.literal("upload"),
         })
       )
     ),
+    steps: s.array(
+      s.object({
+        name: s.string(),
+        fields: s.array(
+          s.union(
+            s.object({
+              name: s.string(),
+              title: s.string(),
+              description: s.string(),
+              type: s.literal("shortText"),
+              maxLength: s.number(),
+            }),
+            s.object({
+              name: s.string(),
+              title: s.string(),
+              description: s.string(),
+              type: s.literal("multiSelect"),
+              options: s.array(s.string()),
+            }),
+            s.object({
+              name: s.string(),
+              title: s.string(),
+              description: s.string(),
+              type: s.literal("longText"),
+              wordLimit: s.number(),
+            }),
+            s.object({
+              name: s.string(),
+              title: s.string(),
+              description: s.string(),
+              type: s.literal("multipleChoice"),
+              options: s.array(s.string()),
+            }),
+            s.object({
+              name: s.string(),
+              title: s.string(),
+              description: s.string(),
+              type: s.literal("checkbox"), // single checkbox
+            }),
+            s.object({
+              name: s.string(),
+              title: s.string(),
+              description: s.string(),
+              type: s.literal("upload"),
+            })
+          )
+        ),
+      })
+    ),
   }),
-  //
   submissions: defineTable({
     user: s.id("users"),
     application: s.id("applications"),
     submitted: s.boolean(),
-    // TODO clarify the EXACT fields structure and their types
-    fields: s.array(
-      s.object({
-        name: s.string(),
-        value: s.string(),
-        adminOnly: s.boolean(),
-      })
+    fields: s.map(
+      s.string(),
+      s.union(s.string(), s.boolean(), s.array(s.string()))
     ),
   }),
 });
