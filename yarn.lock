@@ -1281,12 +1281,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@convex-dev/common@npm:0.1.10":
-  version: 0.1.10
-  resolution: "@convex-dev/common@npm:0.1.10"
+"@convex-dev/common@npm:0.2.1":
+  version: 0.2.1
+  resolution: "@convex-dev/common@npm:0.2.1"
   dependencies:
     base64-js: ^1.5.1
-  checksum: 7141c8de5c2d353a1277d6f3cb9ea67da418f1f6af102511fe3165901982113450f820d6e394e2472c26acf0bbf51cba72bb31b7267edb7545a8bfdcde2126ec
+  checksum: b390bc1c924595ffce55e9d6d0efcdd0d389dd658587691fd3adfb85964e51d6cc09f929e3fc663ff4b69de18098feae4e5753b154bcf7e361448352d972954c
   languageName: node
   linkType: hard
 
@@ -2525,16 +2525,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4, chalk@npm:^4.0.0":
-  version: 4.1.2
-  resolution: "chalk@npm:4.1.2"
-  dependencies:
-    ansi-styles: ^4.1.0
-    supports-color: ^7.1.0
-  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
-  languageName: node
-  linkType: hard
-
 "chalk@npm:^2.0.0":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -2543,6 +2533,16 @@ __metadata:
     escape-string-regexp: ^1.0.5
     supports-color: ^5.3.0
   checksum: ec3661d38fe77f681200f878edbd9448821924e0f93a9cefc0e26a33b145f1027a2084bf19967160d11e1f03bfe4eaffcabf5493b89098b2782c3fe0b03d80c2
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^4.0.0":
+  version: 4.1.2
+  resolution: "chalk@npm:4.1.2"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
   languageName: node
   linkType: hard
 
@@ -2661,13 +2661,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"convex@npm:^0.1.10":
-  version: 0.1.10
-  resolution: "convex@npm:0.1.10"
+"convex@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "convex@npm:0.2.1"
   dependencies:
-    "@convex-dev/common": 0.1.10
+    "@convex-dev/common": 0.2.1
     base64-js: ^1.5.1
-    chalk: 4
     encoding: ^0.1.13
     esbuild: ^0.14.16
     node-fetch: ^2.6.1
@@ -2685,7 +2684,7 @@ __metadata:
       optional: true
   bin:
     convex: bin/main.js
-  checksum: 0373a27df2f83484b753d1cb6aa52bb8688b45637d0b703e602b5f32d094e5d9dee61b95d43d2ca5ab3016683a91819597aa103803841a646dd47cb156d163bd
+  checksum: 78d0c606e169ec3aa22d2d3893bb0f3b6628e45f3860c89f4fddf0cc385adef1e32bf4cd95845839d0d24cad8d1b5649238be72ba96dd29574318bca87c189d6
   languageName: node
   linkType: hard
 
@@ -2702,7 +2701,7 @@ __metadata:
     "@types/react": 18.0.18
     "@typescript-eslint/eslint-plugin": ^5.36.2
     "@typescript-eslint/parser": ^5.36.2
-    convex: ^0.1.10
+    convex: ^0.2.1
     depcheck: ^1.4.3
     eslint: ^8.23.0
     eslint-config-next: 12.2.5
