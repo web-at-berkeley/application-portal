@@ -8,8 +8,8 @@ const exampleApplication = {
     {
       name: "Application Stage",
       type: "multiSelect",
-      options: ["Interviewing", "Accepted", "Rejected"],
-    },
+      options: ["Interviewing", "Accepted", "Rejected"]
+    }
   ],
   steps: [
     {
@@ -20,16 +20,16 @@ const exampleApplication = {
           title: "First name", // title in application form
           description: "", // description in application form
           type: "shortText",
-          maxLength: 14,
+          maxLength: 14
         },
         {
           name: "Essay #1",
           title: "Why do you want to join WDB?",
           description: "Use 250 words or less.",
           type: "longText",
-          wordLimit: 250,
-        },
-      ],
+          wordLimit: 250
+        }
+      ]
     },
     {
       name: "Branch Preferences",
@@ -39,11 +39,11 @@ const exampleApplication = {
           title: "Which branch do you prefer?",
           description: "Select all that apply.",
           type: "multiSelect",
-          options: ["Industry", "Bootcamp", "Design"],
-        },
-      ],
-    },
-  ],
+          options: ["Industry", "Bootcamp", "Design"]
+        }
+      ]
+    }
+  ]
 };
 
 // for the submissions table:
@@ -56,8 +56,8 @@ const exampleSubmission = {
     "First Name": "Anish",
     "Essay #1": "alwkejhlkajgh",
     "Application Stage": "Accepted",
-    "Branch Preference": ["Industry", "Design", "Bootcamp"],
-  },
+    "Branch Preference": ["Industry", "Design", "Bootcamp"]
+  }
 };
 
 export default defineSchema({
@@ -69,8 +69,8 @@ export default defineSchema({
     email: s.string(),
     isAdmin: s.boolean(),
     profilePic: s.string(), // url
-    tokenIdentifier: s.string(), // TODO: add index on this field
-  }),
+    tokenIdentifier: s.string() // TODO: add index on this field
+  }).index("by_tokenIdentifier", ["tokenIdentifier"]), // TODO clarify whether this is the desired behavior
   applications: defineTable({
     title: s.string(),
     adminFields: s.array(
@@ -78,29 +78,29 @@ export default defineSchema({
         s.object({
           name: s.string(),
           type: s.literal("shortText"),
-          maxLength: s.number(),
+          maxLength: s.number()
         }),
         s.object({
           name: s.string(),
           type: s.literal("multiSelect"),
-          options: s.array(s.string()),
+          options: s.array(s.string())
         }),
         s.object({
           name: s.string(),
-          type: s.literal("longText"),
+          type: s.literal("longText")
         }),
         s.object({
           name: s.string(),
           type: s.literal("multipleChoice"),
-          options: s.array(s.string()),
+          options: s.array(s.string())
         }),
         s.object({
           name: s.string(),
-          type: s.literal("checkbox"), // single checkbox
+          type: s.literal("checkbox") // single checkbox
         }),
         s.object({
           name: s.string(),
-          type: s.literal("upload"),
+          type: s.literal("upload")
         })
       )
     ),
@@ -114,45 +114,45 @@ export default defineSchema({
               title: s.string(),
               description: s.string(),
               type: s.literal("shortText"),
-              maxLength: s.number(),
+              maxLength: s.number()
             }),
             s.object({
               name: s.string(),
               title: s.string(),
               description: s.string(),
               type: s.literal("multiSelect"),
-              options: s.array(s.string()),
+              options: s.array(s.string())
             }),
             s.object({
               name: s.string(),
               title: s.string(),
               description: s.string(),
               type: s.literal("longText"),
-              wordLimit: s.number(),
+              wordLimit: s.number()
             }),
             s.object({
               name: s.string(),
               title: s.string(),
               description: s.string(),
               type: s.literal("multipleChoice"),
-              options: s.array(s.string()),
+              options: s.array(s.string())
             }),
             s.object({
               name: s.string(),
               title: s.string(),
               description: s.string(),
-              type: s.literal("checkbox"), // single checkbox
+              type: s.literal("checkbox") // single checkbox
             }),
             s.object({
               name: s.string(),
               title: s.string(),
               description: s.string(),
-              type: s.literal("upload"),
+              type: s.literal("upload")
             })
           )
-        ),
+        )
       })
-    ),
+    )
   }),
   submissions: defineTable({
     user: s.id("users"),
@@ -161,6 +161,6 @@ export default defineSchema({
     fields: s.map(
       s.string(),
       s.union(s.string(), s.boolean(), s.array(s.string()))
-    ),
-  }),
+    )
+  })
 });
