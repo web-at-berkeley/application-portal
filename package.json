@@ -1,5 +1,5 @@
 {
-  "name": "TODO",
+  "name": "convex",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,7 +16,7 @@
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "convex": "^0.1.10",
+    "convex": "^0.2.1",
     "framer-motion": "^7.3.2",
     "next": "^12.2.5",
     "nextjs-progressbar": "^0.0.14",

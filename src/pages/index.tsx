@@ -3,11 +3,13 @@ import { Button } from "@chakra-ui/react";
 import Head from "next/head";
 import { ReactNode, useState } from "react";
 
+import { useMutation } from "../../convex/_generated/react";
 import ButtonLink from "../components/utils/ButtonLink";
 import NextLink from "../components/utils/NextLink";
 
 export default function Home() {
   const [child, setChild] = useState<object | null>(null);
+  const createUser = useMutation("createUser");
   return (
     <>
       <Head>
@@ -29,6 +31,9 @@ export default function Home() {
           <NextLink href="/random-route" color="TODO.blue">
             Test 404 Page
           </NextLink>
+        </Box>
+        <Box>
+          <Button onClick={() => createUser()}>Create User (test)</Button>
         </Box>
       </Stack>
     </>

@@ -1,0 +1,7 @@
+{
+  "project": "wdb-applicant-portal",
+  "team": "wdb",
+  "prodUrl": "https://academic-oyster-791.convex.cloud",
+  "functions": "convex/",
+  "authInfo": []
+}
