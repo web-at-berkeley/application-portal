@@ -163,4 +163,12 @@ export default defineSchema({
       s.union(s.string(), s.boolean(), s.array(s.string()))
     ),
   }),
+  autosave: defineTable({
+    id: s.string(),
+    formdata: s.object({
+      text: s.string(),
+      checkbox: s.array(s.string()),
+      multipleChoice: s.string(),
+    }),
+  }),
 });

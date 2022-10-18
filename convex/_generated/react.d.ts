@@ -18,7 +18,9 @@ import type {
   UseMutationForAPI,
   UseConvexForAPI,
 } from "convex/react";
+import type * as autoSaveData from "../autoSaveData";
 import type * as createUser from "../createUser";
+import type * as getAutoSaveData from "../getAutoSaveData";
 
 /**
  * A type describing your app's public Convex API.
@@ -30,7 +32,9 @@ import type * as createUser from "../createUser";
  * `ConvexReactClient` to create app-specific types.
  */
 export type ConvexAPI = ApiFromModules<{
+  autoSaveData: typeof autoSaveData;
   createUser: typeof createUser;
+  getAutoSaveData: typeof getAutoSaveData;
 }>;
 
 /**
