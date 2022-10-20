@@ -22,7 +22,7 @@
   },
   "include": [
     "./**/*",
-    "..\\node_modules\\convex\\dist\\esm\\environment\\index.d.ts"
+    "../node_modules/convex/dist/esm/environment/index.d.ts"
   ],
   "exclude": ["./_generated"]
 }

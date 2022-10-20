@@ -21,6 +21,7 @@ import type {
 import type * as autoSaveData from "../autoSaveData";
 import type * as createUser from "../createUser";
 import type * as getAutoSaveData from "../getAutoSaveData";
+import type * as storeUser from "../storeUser";
 
 /**
  * A type describing your app's public Convex API.
@@ -35,6 +36,7 @@ export type ConvexAPI = ApiFromModules<{
   autoSaveData: typeof autoSaveData;
   createUser: typeof createUser;
   getAutoSaveData: typeof getAutoSaveData;
+  storeUser: typeof storeUser;
 }>;
 
 /**

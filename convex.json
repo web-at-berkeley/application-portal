@@ -3,5 +3,10 @@
   "team": "wdb",
   "prodUrl": "https://academic-oyster-791.convex.cloud",
   "functions": "convex/",
-  "authInfo": []
+  "authInfo": [
+    {
+      "domain": "https://dev-yeizc1qr.us.auth0.com/",
+      "applicationID": "fCHCI6UMfPRC8LW4edUL9myaeAxQuaU0"
+    }
+  ]
 }

@@ -6,6 +6,7 @@ import { ReactNode, useState } from "react";
 import { useMutation } from "../../convex/_generated/react";
 import ButtonLink from "../components/utils/ButtonLink";
 import NextLink from "../components/utils/NextLink";
+import { Logout } from "../components/auth/Logout";
 
 export default function Home() {
   const [child, setChild] = useState<object | null>(null);
@@ -16,6 +17,7 @@ export default function Home() {
         <title>TODO: page title</title>
       </Head>
       <Stack p={4}>
+        <Logout />
         <Heading>WDB Next.js Template</Heading>
         <Box>
           <Button variant="blue" onClick={() => setChild({})}>
