@@ -4,6 +4,7 @@ import Head from "next/head";
 import { ReactNode, useState } from "react";
 
 import { useMutation } from "../../convex/_generated/react";
+import Application from "../components/application-form/Application";
 import ButtonLink from "../components/utils/ButtonLink";
 import NextLink from "../components/utils/NextLink";
 import { Logout } from "../components/auth/Logout";
@@ -36,6 +37,9 @@ export default function Home() {
         </Box>
         <Box>
           <Button onClick={() => createUser()}>Create User (test)</Button>
+        </Box>
+        <Box>
+          <Application />
         </Box>
       </Stack>
     </>
