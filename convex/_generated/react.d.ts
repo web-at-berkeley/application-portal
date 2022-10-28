@@ -19,9 +19,13 @@ import type {
   UseConvexForAPI,
 } from "convex/react";
 import type * as autoSaveData from "../autoSaveData";
+import type * as createApplication from "../createApplication";
 import type * as createUser from "../createUser";
+import type * as getApplication from "../getApplication";
 import type * as getAutoSaveData from "../getAutoSaveData";
+import type * as getSubmission from "../getSubmission";
 import type * as storeUser from "../storeUser";
+import type * as updateSubmission from "../updateSubmission";
 
 /**
  * A type describing your app's public Convex API.
@@ -34,9 +38,13 @@ import type * as storeUser from "../storeUser";
  */
 export type ConvexAPI = ApiFromModules<{
   autoSaveData: typeof autoSaveData;
+  createApplication: typeof createApplication;
   createUser: typeof createUser;
+  getApplication: typeof getApplication;
   getAutoSaveData: typeof getAutoSaveData;
+  getSubmission: typeof getSubmission;
   storeUser: typeof storeUser;
+  updateSubmission: typeof updateSubmission;
 }>;
 
 /**

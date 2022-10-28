@@ -32,3 +32,4 @@ yarn-error.log*
 *.pem
 *.tsbuildinfo
 .babelrc
+*.nosync

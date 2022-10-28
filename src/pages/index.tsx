@@ -12,6 +12,7 @@ import { Logout } from "../components/auth/Logout";
 export default function Home() {
   const [child, setChild] = useState<object | null>(null);
   const createUser = useMutation("createUser");
+  const createApplication = useMutation("createApplication");
   return (
     <>
       <Head>
@@ -42,6 +43,11 @@ export default function Home() {
         </Box>
         <Box>
           <Button onClick={() => createUser()}>Create User (test)</Button>
+        </Box>
+        <Box>
+          <Button onClick={() => createApplication()}>
+            Create Application (test)
+          </Button>
         </Box>
         <Box>
           <Application />
