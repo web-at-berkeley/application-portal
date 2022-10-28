@@ -2,9 +2,11 @@ import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
   colors: {
-    TODO: {
+    convex: {
       blue: "#1e40af",
       lightBlue: "#456ced",
+      grey: "#c5c5c5",
+      darkGrey: "#9F9D9D",
     },
   },
   fonts: {
@@ -34,20 +36,46 @@ export const theme = extendTheme({
         overflowWrap: "anywhere",
       },
     },
+    Checkbox: {
+      baseStyle: {
+        control: {
+          border: "1px",
+          borderColor: "#000000",
+          borderRadius: "5px",
+        },
+      },
+    },
     Text: {
       baseStyle: {
         overflowWrap: "anywhere",
       },
+      variants: {
+        fieldTitle: {
+          color: "black",
+          fontWeight: "500",
+          fontSize: "20px",
+          lineHeight: "24px",
+        },
+        fieldDescription: {
+          color: "convex.grey",
+          fontWeight: "400",
+          fontSize: "12px",
+          lineHeight: "14px",
+        },
+      },
+    },
+    Input: {
+      variants: {},
     },
     Button: {
       variants: {
         blue: {
-          bg: "TODO.blue",
+          bg: "convex.blue",
           color: "white",
           _hover: {
-            bg: "TODO.lightBlue",
+            bg: "convex.lightBlue",
             _active: {
-              bg: "TODO.lightBlue",
+              bg: "convex.lightBlue",
             },
           },
         },

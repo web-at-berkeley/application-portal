@@ -31,6 +31,11 @@ export default function Home() {
           </ButtonLink>
         </Box>
         <Box>
+          <ButtonLink href="/application" variant="blue">
+            Test Components
+          </ButtonLink>
+        </Box>
+        <Box>
           <NextLink href="/random-route" color="TODO.blue">
             Test 404 Page
           </NextLink>

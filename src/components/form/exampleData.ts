@@ -1,8 +1,8 @@
-import { defineSchema, defineTable, s } from "convex/schema";
+import { Document, Id } from "../../../convex/_generated/dataModel";
 
-// TODO: delete these (example data)
-
-export const application = {
+export const application: Document<"applications"> = {
+  _id: "j24tox2p4023ln" as unknown as Id<"applications">,
+  _creationTime: 0,
   title: "WDB Application",
   adminFields: [
     {
@@ -47,7 +47,7 @@ export const application = {
           name: "Year in School",
           title: "Year in School (2022-2023 Academic Year)",
           description: "",
-          type: "multiChoice",
+          type: "multipleChoice",
           options: ["First", "Second", "Third", "Fourth", "Fifth or more"],
         },
         {
@@ -56,7 +56,7 @@ export const application = {
             "Would you like to apply as a developer or a designer? (Please review the requirements before making a decision)",
           description:
             "If you believe you do not meet these requirements, we highly encourage you to apply to our introduction to Fullstack Development DeCal Developer requirements: Some experience with either frontend or backend For frontend, this can look like experience with a popular frontend framework such as React, Vue, Angular, etc. For backend, this can look like experience with common backend frameworks such as Node, Django, etc. Designer requirements Some experience with designing in Figma, Adobe Creative Cloud, or any other design tools. If you are interested in both, please indicate that below and fill out the short answer questions for both roles. By applying as a developer or designer, you will be considered for both WDB’s product bootcamp and industry initiative. Unsure whether or not you meet these requirements? Contact webatberkeley@gmail.com",
-          type: "multiChoice",
+          type: "multipleChoice",
           options: ["First", "Second", "Third", "Fourth", "Fifth or more"],
         },
         {
@@ -108,7 +108,7 @@ export const application = {
           name: "Dev/Design preference",
           title: "Which are you more comfortable / have more experience with?",
           description: "",
-          type: "multiChoice",
+          type: "multipleChoice",
           options: ["Development", "Design"],
         },
         {
@@ -147,7 +147,7 @@ export const application = {
           title:
             "If you are not selected to be a developer/designer, would you be interested in being considered as a student for our Intrduction to Fullstack Development DeCal?",
           description: "",
-          type: "multiChoice",
+          type: "multipleChoice",
           options: ["Yes", "No"],
         },
         {
@@ -200,130 +200,3 @@ export const application = {
     },
   ],
 };
-
-// for the submissions table:
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const exampleSubmission = {
-  user: "325h2pojfds", // user id
-  application: "3lhnl253", // application id
-  submitted: true,
-  fields: {
-    "First Name": "Anish",
-    "Essay #1": "alwkejhlkajgh",
-    "Application Stage": "Accepted",
-    "Branch Preference": ["Industry", "Design", "Bootcamp"],
-  },
-};
-
-export default defineSchema({
-  // table for users
-  users: defineTable({
-    firstName: s.string(),
-    lastName: s.string(),
-    // TODO: find out how to protect against malicious input from the user
-    email: s.string(),
-    isAdmin: s.boolean(),
-    profilePic: s.string(), // url
-    tokenIdentifier: s.string(), // TODO: add index on this field
-  }).index("by_tokenIdentifier", ["tokenIdentifier"]), // TODO clarify whether this is the desired behavior
-  applications: defineTable({
-    title: s.string(),
-    adminFields: s.array(
-      s.union(
-        s.object({
-          name: s.string(),
-          type: s.literal("shortText"),
-          maxLength: s.number(),
-        }),
-        s.object({
-          name: s.string(),
-          type: s.literal("multiSelect"),
-          options: s.array(s.string()),
-        }),
-        s.object({
-          name: s.string(),
-          type: s.literal("longText"),
-        }),
-        s.object({
-          name: s.string(),
-          type: s.literal("multipleChoice"),
-          options: s.array(s.string()),
-        }),
-        s.object({
-          name: s.string(),
-          type: s.literal("checkbox"), // single checkbox
-        }),
-        s.object({
-          name: s.string(),
-          type: s.literal("upload"),
-        })
-      )
-    ),
-    steps: s.array(
-      s.object({
-        name: s.string(),
-        fields: s.array(
-          s.union(
-            s.object({
-              name: s.string(),
-              title: s.string(),
-              description: s.string(),
-              type: s.literal("shortText"),
-              maxLength: s.number(),
-            }),
-            s.object({
-              name: s.string(),
-              title: s.string(),
-              description: s.string(),
-              type: s.literal("multiSelect"),
-              options: s.array(s.string()),
-            }),
-            s.object({
-              name: s.string(),
-              title: s.string(),
-              description: s.string(),
-              type: s.literal("longText"),
-              wordLimit: s.number(),
-            }),
-            s.object({
-              name: s.string(),
-              title: s.string(),
-              description: s.string(),
-              type: s.literal("multipleChoice"),
-              options: s.array(s.string()),
-            }),
-            s.object({
-              name: s.string(),
-              title: s.string(),
-              description: s.string(),
-              type: s.literal("checkbox"), // single checkbox
-            }),
-            s.object({
-              name: s.string(),
-              title: s.string(),
-              description: s.string(),
-              type: s.literal("upload"),
-            })
-          )
-        ),
-      })
-    ),
-  }),
-  submissions: defineTable({
-    user: s.id("users"),
-    application: s.id("applications"),
-    submitted: s.boolean(),
-    fields: s.map(
-      s.string(),
-      s.union(s.string(), s.boolean(), s.array(s.string()))
-    ),
-  }),
-  autosave: defineTable({
-    id: s.string(),
-    formdata: s.object({
-      text: s.string(),
-      checkbox: s.array(s.string()),
-      multipleChoice: s.string(),
-    }),
-  }),
-});
