@@ -1308,12 +1308,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@convex-dev/common@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@convex-dev/common@npm:0.2.1"
+"@convex-dev/common@npm:0.3.1":
+  version: 0.3.1
+  resolution: "@convex-dev/common@npm:0.3.1"
   dependencies:
     base64-js: ^1.5.1
-  checksum: b390bc1c924595ffce55e9d6d0efcdd0d389dd658587691fd3adfb85964e51d6cc09f929e3fc663ff4b69de18098feae4e5753b154bcf7e361448352d972954c
+  checksum: a4ee0cde6931cdebadb7ce61d420c1b0a67391a0fb9157de1a0429b6fdc46e9339e325fd9f042a0e128fe51ae49685f86893c3cb3ca0688a9a6ac1648a1727be
   languageName: node
   linkType: hard
 
@@ -1864,6 +1864,25 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 736857d524b41a8a4db81094e9b027f554004e0fa3e86325d85bdb38f7e6459ce022db079edb6c61ba0f46fe8583b3e663e95f7acbd13e51b8da6c34e45bba2e
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^8.5.15":
+  version: 8.5.15
+  resolution: "@tanstack/react-table@npm:8.5.15"
+  dependencies:
+    "@tanstack/table-core": 8.5.15
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 1d80268eca88fd847dd8d8d86ef4b0a5e19945497497679026d74b907cf39739a22ea75929a4f2ce1a623af42d2a6b3d248a459eeda637b7d68e391a09ce1afc
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.5.15":
+  version: 8.5.15
+  resolution: "@tanstack/table-core@npm:8.5.15"
+  checksum: 03d63e126e843375c2950809d680cd670694cfbee4e3cdc8ca463d97ba64cadd11ee9addf000ab4cb20d35ffb668df5f50cb205c594dc6ef2d0942005662d0ce
   languageName: node
   linkType: hard
 
@@ -2704,11 +2723,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"convex@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "convex@npm:0.2.1"
+"convex@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "convex@npm:0.3.1"
   dependencies:
-    "@convex-dev/common": 0.2.1
+    "@convex-dev/common": 0.3.1
     base64-js: ^1.5.1
     encoding: ^0.1.13
     esbuild: ^0.14.16
@@ -2727,7 +2746,7 @@ __metadata:
       optional: true
   bin:
     convex: bin/main.js
-  checksum: 78d0c606e169ec3aa22d2d3893bb0f3b6628e45f3860c89f4fddf0cc385adef1e32bf4cd95845839d0d24cad8d1b5649238be72ba96dd29574318bca87c189d6
+  checksum: e1769b6751f7f2f8760b9b976a41ccf438aba6a7e3bee4bfc1722723019b142e1add86a368b252ba59b1e389985568e0b9960f3f3d431af6d043567543dfb10c
   languageName: node
   linkType: hard
 
@@ -2740,12 +2759,13 @@ __metadata:
     "@chakra-ui/react": ^2.3.2
     "@emotion/react": ^11.10.4
     "@emotion/styled": ^11.10.4
+    "@tanstack/react-table": ^8.5.15
     "@types/eslint": ^8.4.6
     "@types/node": 18.7.16
     "@types/react": 18.0.18
     "@typescript-eslint/eslint-plugin": ^5.36.2
     "@typescript-eslint/parser": ^5.36.2
-    convex: ^0.2.1
+    convex: ^0.3.1
     depcheck: ^1.4.3
     eslint: ^8.23.0
     eslint-config-next: 12.2.5
@@ -2764,6 +2784,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-error-boundary: ^3.1.4
+    react-icons: ^4.6.0
     typescript: 4.8.2
   languageName: unknown
   linkType: soft
@@ -5487,6 +5508,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 4dbc2166ac397d9e9340bd0722c6165c23f21629515f13e9cb96eaff82aa1543a2f7f3cccf15689821f19166e3a3ce59f380c43643099eb119b5f9c529b23181
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "react-icons@npm:4.6.0"
+  peerDependencies:
+    react: "*"
+  checksum: a08375d4563e381e156d826a8d551dd26c1bf7c424a79139173bf4c8df71e884badd7d4f5fe9faa0d73d18ace265bcc89891b65fd8f808812b1011b612ebbc53
   languageName: node
   linkType: hard
 

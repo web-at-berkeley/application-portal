@@ -9,16 +9,19 @@ import {
   Box,
   VStack,
   HStack,
+  Center,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { forwardRef, ReactNode } from "react";
+
+import Form from "../form/Form";
 
 interface ApplicationProgressBarProps {
   stepNames: string[];
   currentStep: number;
   latestCompletedStep: number;
-  tabPanels: string[];
   onChange: (step: number) => void;
+  id: string;
 }
 
 interface CustomTabProps {
@@ -33,8 +36,8 @@ export default function ApplicationProgressBar({
   stepNames,
   currentStep,
   latestCompletedStep,
-  tabPanels,
   onChange,
+  id,
 }: ApplicationProgressBarProps) {
   const CustomTab = forwardRef<HTMLElement, CustomTabProps>((props, ref) => {
     const tabProps = useTab({ ...props, ref });
@@ -42,7 +45,7 @@ export default function ApplicationProgressBar({
     // @ts-expect-error - Chakra UI types are wrong
     styles.tab._selected.color = "rgb(95, 96, 346)";
     return (
-      <Button __css={styles.tab} {...tabProps} width="100%">
+      <Button __css={styles.tab} {...tabProps} width="100%" pt={6}>
         <VStack align="left">
           <HStack>
             <Box>{(props.step + 1).toString().padStart(2, "0")}</Box>
@@ -80,8 +83,9 @@ export default function ApplicationProgressBar({
   CustomTab.displayName = "CustomTab";
 
   return (
-    <>
+    <Center>
       <Tabs
+        w="90vw"
         index={currentStep}
         defaultIndex={currentStep}
         variant="unstyled"
@@ -101,15 +105,15 @@ export default function ApplicationProgressBar({
           ))}
         </TabList>
         <br />
-        <TabPanels scrollBehavior="smooth">
-          {tabPanels.map((tabPanel, index) => (
+        <TabPanels scrollBehavior="smooth" marginBottom="100px">
+          {stepNames.map((stepName, index) => (
             <TabPanel key={index}>
-              <p>{tabPanel}</p>
+              <Form id={id} step={stepName} />
             </TabPanel>
           ))}
         </TabPanels>
       </Tabs>
-    </>
+    </Center>
   );
 }
 

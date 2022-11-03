@@ -8,14 +8,18 @@ import {
 } from "@chakra-ui/react";
 
 interface MultiSelectProps extends CheckboxGroupProps {
+  name: string;
   title: string;
   description: string;
   options: string[];
+  value: string[];
 }
 export default function MultiSelect({
+  name,
   title,
   description,
   options,
+  value,
   ...props
 }: MultiSelectProps) {
   return (
@@ -28,7 +32,14 @@ export default function MultiSelect({
           </Text>
         )}
         <Box marginTop={2.5}>
-          <CheckboxGroup colorScheme="gray" {...props}>
+          <CheckboxGroup
+            colorScheme="gray"
+            {...props}
+            // TODO: fix checkbox groups
+            // @ts-expect-error
+            name={name}
+            value={value}
+          >
             <Stack spacing={[1, 5]} direction={["column", "row"]}>
               {options.map((option, i) => {
                 return (

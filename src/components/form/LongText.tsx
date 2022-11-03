@@ -1,15 +1,19 @@
 import { Box, Text, Textarea, TextareaProps } from "@chakra-ui/react";
 
 interface LongTextProps extends TextareaProps {
+  name: string;
   title: string;
   description: string;
   wordLimit: number;
+  value: string;
 }
 
 export default function LongText({
+  name,
   title,
   description,
   wordLimit,
+  value,
   ...props
 }: LongTextProps) {
   return (
@@ -32,6 +36,8 @@ export default function LongText({
             borderColor: "#00000",
           }}
           maxLength={wordLimit}
+          name={name}
+          value={value}
           {...props}
         />
         {/* Need to change it to no. of characters */}

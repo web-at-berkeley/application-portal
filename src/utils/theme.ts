@@ -10,8 +10,8 @@ export const theme = extendTheme({
     },
   },
   fonts: {
-    heading: "Inter, sans-serif",
-    body: "Inter, sans-serif",
+    heading: "Rubik, sans-serif",
+    body: "Rubik, sans-serif",
   },
   styles: {
     global: {

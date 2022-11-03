@@ -1,12 +1,16 @@
 import { Box, Text, Checkbox, CheckboxProps } from "@chakra-ui/react";
 
 interface CheckBoxProps extends CheckboxProps {
+  name: string;
   title: string;
   description: string;
+  checked: boolean;
 }
 export default function CheckBox({
+  name,
   title,
   description,
+  checked,
   ...props
 }: CheckBoxProps) {
   return (
@@ -18,7 +22,15 @@ export default function CheckBox({
             {description}
           </Text>
         )}
-        <Checkbox marginTop={3.5} colorScheme="gray" size="lg" {...props} />
+        <Checkbox
+          marginTop={3.5}
+          colorScheme="gray"
+          size="lg"
+          name={name}
+          defaultChecked={checked}
+          checked={checked}
+          {...props}
+        />
       </Box>
     </div>
   );

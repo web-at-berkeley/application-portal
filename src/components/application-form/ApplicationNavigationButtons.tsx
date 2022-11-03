@@ -20,14 +20,16 @@ export default function ApplicationNavigationButtons({
   };
 
   const handleNext = () => {
-    currentStepUpdater((prev) => prev + 1);
-    if (currentStep === lastCompletedStep) {
-      lastCompletedStepUpdater((prev) => prev + 1);
+    if (currentStep < numSteps - 1) {
+      currentStepUpdater((prev) => prev + 1);
+      if (currentStep === lastCompletedStep) {
+        lastCompletedStepUpdater((prev) => prev + 1);
+      }
     }
   };
 
   return (
-    <div style={{ backgroundColor: "white", padding: "1em" }}>
+    <Box bg="white" p="1em" borderTop="1px solid lightgrey" w="100vw">
       <HStack>
         <Button
           bg="rgb(96, 96, 246)"
@@ -43,6 +45,8 @@ export default function ApplicationNavigationButtons({
         <Box w="full" />
         <Button
           bg="rgb(96, 96, 246)"
+          position="relative"
+          right={4}
           color="white"
           minWidth={190}
           _hover={{ bg: "rgb(58, 58, 242)" }}
@@ -52,6 +56,6 @@ export default function ApplicationNavigationButtons({
           {currentStep >= numSteps - 1 ? "Submit" : "Save & Continue"}
         </Button>
       </HStack>
-    </div>
+    </Box>
   );
 }

@@ -1,15 +1,19 @@
 import { Box, Input, Text, TextProps } from "@chakra-ui/react";
 
 interface ShortTextProps extends TextProps {
+  name: string;
   title: string;
   description: string;
   maxLen: number;
+  value: string;
 }
 
 export default function ShortText({
+  name,
   title,
   description,
   maxLen,
+  value,
   ...props
 }: ShortTextProps) {
   return (
@@ -32,6 +36,9 @@ export default function ShortText({
             borderColor: "#00000",
           }}
           maxLength={maxLen}
+          defaultValue={value}
+          name={name}
+          value={value}
           {...props}
         />
       </Box>

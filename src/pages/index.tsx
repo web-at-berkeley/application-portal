@@ -4,10 +4,10 @@ import Head from "next/head";
 import { ReactNode, useState } from "react";
 
 import { useMutation } from "../../convex/_generated/react";
-import Application from "../components/application-form/Application";
 import ButtonLink from "../components/utils/ButtonLink";
 import NextLink from "../components/utils/NextLink";
 import { Logout } from "../components/auth/Logout";
+import Navbar from "../components/utils/NavBar";
 
 export default function Home() {
   const [child, setChild] = useState<object | null>(null);
@@ -15,6 +15,7 @@ export default function Home() {
   const createApplication = useMutation("createApplication");
   return (
     <>
+      <Navbar />
       <Head>
         <title>TODO: page title</title>
       </Head>
@@ -48,9 +49,6 @@ export default function Home() {
           <Button onClick={() => createApplication()}>
             Create Application (test)
           </Button>
-        </Box>
-        <Box>
-          <Application />
         </Box>
       </Stack>
     </>

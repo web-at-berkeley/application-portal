@@ -1,5 +1,7 @@
 import { GenericId } from "convex/values";
 
+import { createDefaultSubmission } from "../src/utils";
+
 import { Document } from "./_generated/dataModel";
 import { mutation } from "./_generated/server";
 
@@ -7,7 +9,8 @@ export default mutation(
   async (
     { db, auth },
     applicationId: string,
-    fields: Map<string, string | boolean | string[]>
+    fieldName: string,
+    fieldValue: string | boolean | string[]
   ) => {
     // The `UserIdentity` returned from `auth.getUserIdentity` is just an ephemeral
     // object representing the identity of the authenticated user; most applications
@@ -53,27 +56,20 @@ export default mutation(
     // Check if we've already stored this identity before.
     const submission: Document<"submissions"> | null = await db
       .query("submissions")
-      .filter((q) =>
-        q.and(
-          q.eq(q.field("user"), user._id),
-          q.eq(q.field("application"), application._id)
-        )
-      )
       .first();
 
     if (submission === null) {
-      db.insert("submissions", {
+      const fieldsMap = createDefaultSubmission(application);
+      fieldsMap.set(fieldName, fieldValue);
+      await db.insert("submissions", {
         user: user._id,
         application: application._id,
         submitted: false,
-        fields,
+        fields: fieldsMap,
       });
-      return;
+    } else {
+      submission.fields.set(fieldName, fieldValue);
+      db.patch(submission._id, { fields: submission.fields });
     }
-
-    const newFields = submission.fields;
-    fields.forEach((value, key) => newFields.set(key, value));
-
-    db.patch(submission._id, { fields: newFields });
   }
 );

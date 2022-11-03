@@ -1,14 +1,18 @@
 import { Select, SelectProps, Text, Box } from "@chakra-ui/react";
 
 interface MultiChoiceProps extends SelectProps {
+  name: string;
   title: string;
   description: string;
   options: string[];
+  value: string;
 }
 export default function MultiChoice({
+  name,
   title,
   description,
   options,
+  value,
   ...props
 }: MultiChoiceProps) {
   return (
@@ -31,6 +35,8 @@ export default function MultiChoice({
             borderRadius: "5px",
             borderColor: "#00000",
           }}
+          name={name}
+          value={value}
           {...props}
         >
           {options.map((option, i) => {
