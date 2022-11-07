@@ -6,6 +6,7 @@ interface MultiChoiceProps extends SelectProps {
   description: string;
   options: string[];
   value: string;
+  isDisabled: boolean;
 }
 export default function MultiChoice({
   name,
@@ -13,6 +14,7 @@ export default function MultiChoice({
   description,
   options,
   value,
+  isDisabled,
   ...props
 }: MultiChoiceProps) {
   return (
@@ -25,6 +27,7 @@ export default function MultiChoice({
           </Text>
         )}
         <Select
+          isDisabled={isDisabled}
           marginTop={4}
           placeholder="Select Option"
           border="1px"

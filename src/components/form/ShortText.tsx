@@ -6,6 +6,7 @@ interface ShortTextProps extends TextProps {
   description: string;
   maxLen: number;
   value: string;
+  isDisabled: boolean;
 }
 
 export default function ShortText({
@@ -14,6 +15,7 @@ export default function ShortText({
   description,
   maxLen,
   value,
+  isDisabled,
   ...props
 }: ShortTextProps) {
   return (
@@ -26,6 +28,7 @@ export default function ShortText({
           </Text>
         )}
         <Input
+          isDisabled={isDisabled}
           marginTop={4}
           border="1px"
           borderRadius="5px"

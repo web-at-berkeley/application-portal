@@ -20,7 +20,7 @@ export default function ApplicationNavigationButtons({
   };
 
   const handleNext = () => {
-    if (currentStep < numSteps - 1) {
+    if (currentStep < numSteps) {
       currentStepUpdater((prev) => prev + 1);
       if (currentStep === lastCompletedStep) {
         lastCompletedStepUpdater((prev) => prev + 1);
@@ -53,7 +53,7 @@ export default function ApplicationNavigationButtons({
           fontWeight="normal"
           onClick={handleNext}
         >
-          {currentStep >= numSteps - 1 ? "Submit" : "Save & Continue"}
+          {currentStep >= numSteps ? "Submit" : "Save & Continue"}
         </Button>
       </HStack>
     </Box>

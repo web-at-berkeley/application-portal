@@ -5,12 +5,14 @@ interface CheckBoxProps extends CheckboxProps {
   title: string;
   description: string;
   checked: boolean;
+  isDisabled: boolean;
 }
 export default function CheckBox({
   name,
   title,
   description,
   checked,
+  isDisabled,
   ...props
 }: CheckBoxProps) {
   return (
@@ -23,6 +25,7 @@ export default function CheckBox({
           </Text>
         )}
         <Checkbox
+          isDisabled={isDisabled}
           marginTop={3.5}
           colorScheme="gray"
           size="lg"

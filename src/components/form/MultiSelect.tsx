@@ -13,6 +13,7 @@ interface MultiSelectProps extends CheckboxGroupProps {
   description: string;
   options: string[];
   value: string[];
+  isDisabled: boolean;
 }
 export default function MultiSelect({
   name,
@@ -20,6 +21,7 @@ export default function MultiSelect({
   description,
   options,
   value,
+  isDisabled,
   ...props
 }: MultiSelectProps) {
   return (
@@ -43,7 +45,12 @@ export default function MultiSelect({
             <Stack spacing={[1, 5]} direction={["column", "row"]}>
               {options.map((option, i) => {
                 return (
-                  <Checkbox size="lg" value={option} key={i}>
+                  <Checkbox
+                    isDisabled={isDisabled}
+                    size="lg"
+                    value={option}
+                    key={i}
+                  >
                     {option}
                   </Checkbox>
                 );

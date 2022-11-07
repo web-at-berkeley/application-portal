@@ -6,6 +6,7 @@ interface LongTextProps extends TextareaProps {
   description: string;
   wordLimit: number;
   value: string;
+  isDisabled: boolean;
 }
 
 export default function LongText({
@@ -14,6 +15,7 @@ export default function LongText({
   description,
   wordLimit,
   value,
+  isDisabled,
   ...props
 }: LongTextProps) {
   return (
@@ -26,6 +28,7 @@ export default function LongText({
           </Text>
         )}
         <Textarea
+          isDisabled={isDisabled}
           marginTop={4}
           border="1px"
           borderRadius="5px"

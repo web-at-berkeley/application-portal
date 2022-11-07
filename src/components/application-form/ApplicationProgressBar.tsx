@@ -15,6 +15,7 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 import { forwardRef, ReactNode } from "react";
 
 import Form from "../form/Form";
+import Summary from "../form/Summary";
 
 interface ApplicationProgressBarProps {
   stepNames: string[];
@@ -103,14 +104,25 @@ export default function ApplicationProgressBar({
               {stepName}
             </CustomTab>
           ))}
+          <CustomTab
+            key={stepNames.length}
+            isDisabled={stepNames.length > latestCompletedStep}
+            isCurrentStep={stepNames.length === currentStep}
+            step={stepNames.length}
+          >
+            Review & Submit
+          </CustomTab>
         </TabList>
         <br />
         <TabPanels scrollBehavior="smooth" marginBottom="100px">
           {stepNames.map((stepName, index) => (
             <TabPanel key={index}>
-              <Form id={id} step={stepName} />
+              <Form id={id} step={stepName} isDisabled={false} />
             </TabPanel>
           ))}
+          <TabPanel>
+            <Summary stepNames={stepNames} id={id} />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Center>
