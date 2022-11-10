@@ -1,4 +1,4 @@
-import { Select, SelectProps, Text, Box } from "@chakra-ui/react";
+import { Box, Select, SelectProps, Text } from "@chakra-ui/react";
 
 interface MultiChoiceProps extends SelectProps {
   name: string;

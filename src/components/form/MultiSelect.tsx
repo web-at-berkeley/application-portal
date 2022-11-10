@@ -3,8 +3,8 @@ import {
   Checkbox,
   CheckboxGroup,
   CheckboxGroupProps,
-  Text,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 
 interface MultiSelectProps extends CheckboxGroupProps {

@@ -1,4 +1,4 @@
-import { Button, Box, HStack } from "@chakra-ui/react";
+import { Box, Button, HStack } from "@chakra-ui/react";
 
 interface ApplicationNavigationButtonsProps {
   currentStepUpdater: React.Dispatch<React.SetStateAction<number>>;

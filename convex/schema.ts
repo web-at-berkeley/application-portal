@@ -224,8 +224,8 @@ export default defineSchema({
     email: s.string(),
     isAdmin: s.boolean(),
     profilePic: s.string(), // url
-    tokenIdentifier: s.string(), // TODO: add index on this field
-  }).index("by_tokenIdentifier", ["tokenIdentifier"]), // TODO clarify whether this is the desired behavior
+    tokenIdentifier: s.string(),
+  }).index("by_tokenIdentifier", ["tokenIdentifier"]),
   applications: defineTable({
     title: s.string(),
     adminFields: s.array(
@@ -317,7 +317,7 @@ export default defineSchema({
       s.string(),
       s.union(s.string(), s.boolean(), s.array(s.string()))
     ),
-  }),
+  }).index("by_userAndApplication", ["user", "application"]),
   autosave: defineTable({
     id: s.string(),
     formdata: s.object({

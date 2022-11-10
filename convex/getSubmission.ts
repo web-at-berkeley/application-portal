@@ -15,7 +15,9 @@ export default query(
 
     const user: Document<"users"> | null = await db
       .query("users")
-      .filter((q) => q.eq(q.field("tokenIdentifier"), identity.tokenIdentifier))
+      .withIndex("by_tokenIdentifier", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
       .first();
 
     if (!user) {

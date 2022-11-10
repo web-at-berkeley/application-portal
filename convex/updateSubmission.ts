@@ -56,6 +56,12 @@ export default mutation(
     // Check if we've already stored this identity before.
     const submission: Document<"submissions"> | null = await db
       .query("submissions")
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("user"), user._id),
+          q.eq(q.field("application"), application._id)
+        )
+      )
       .first();
 
     if (submission === null) {

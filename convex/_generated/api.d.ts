@@ -13,6 +13,7 @@ import type { ApiFromModules } from "convex/browser";
 import type * as autoSaveData from "../autoSaveData";
 import type * as createApplication from "../createApplication";
 import type * as createUser from "../createUser";
+import type * as getAllSubmissions from "../getAllSubmissions";
 import type * as getApplication from "../getApplication";
 import type * as getAutoSaveData from "../getAutoSaveData";
 import type * as getSubmission from "../getSubmission";
@@ -32,6 +33,7 @@ export type API = ApiFromModules<{
   autoSaveData: typeof autoSaveData;
   createApplication: typeof createApplication;
   createUser: typeof createUser;
+  getAllSubmissions: typeof getAllSubmissions;
   getApplication: typeof getApplication;
   getAutoSaveData: typeof getAutoSaveData;
   getSubmission: typeof getSubmission;

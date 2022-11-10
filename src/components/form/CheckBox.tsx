@@ -1,4 +1,4 @@
-import { Box, Text, Checkbox, CheckboxProps } from "@chakra-ui/react";
+import { Box, Checkbox, CheckboxProps, Text } from "@chakra-ui/react";
 
 interface CheckBoxProps extends CheckboxProps {
   name: string;

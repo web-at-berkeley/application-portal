@@ -1,17 +1,17 @@
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  TabPanel,
-  useTab,
-  useMultiStyleConfig,
-  Button,
-  Box,
-  VStack,
-  HStack,
-  Center,
-} from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Center,
+  HStack,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useMultiStyleConfig,
+  useTab,
+  VStack,
+} from "@chakra-ui/react";
 import { forwardRef, ReactNode } from "react";
 
 import Form from "../form/Form";
