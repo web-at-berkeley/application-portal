@@ -16,16 +16,17 @@ interface FormProps {
   step: string;
   id: string;
   isDisabled: boolean;
+  userID?: string;
 }
 
 // TODO: add support for upload
-export default function Form({ step, id, isDisabled }: FormProps) {
+export default function Form({ step, id, isDisabled, userID }: FormProps) {
   const application = useQuery("getApplication", id)!;
   const questions: Field[] = application.steps.filter((obj) => {
     return obj.name === step;
   })[0].fields;
 
-  const fields = useSubmissionFields(application);
+  const fields = useSubmissionFields(application, userID);
 
   const uploadAutoSaveData = useMutation(
     "updateSubmission"
@@ -117,7 +118,12 @@ export default function Form({ step, id, isDisabled }: FormProps) {
   });
   return (
     <FormControl onChange={handleAutoSave}>
-      <Stack spacing="30px" width="850px" margin="0 auto" padding="0 50px">
+      <Stack
+        spacing="30px"
+        width={userID ? "100%" : "850px"}
+        margin="0 auto"
+        padding="0 50px"
+      >
         {form}
       </Stack>
     </FormControl>
