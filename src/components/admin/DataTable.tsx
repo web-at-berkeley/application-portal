@@ -1,14 +1,23 @@
-import * as React from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, chakra } from "@chakra-ui/react";
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import {
-  useReactTable,
+  chakra,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
-  ColumnDef,
-  SortingState,
   getSortedRowModel,
+  SortingState,
+  useReactTable,
 } from "@tanstack/react-table";
+import { useState } from "react";
 
 export interface DataTableProps<Data extends object> {
   data: Data[];
@@ -19,7 +28,7 @@ export function DataTable<Data extends object>({
   data,
   columns,
 }: DataTableProps<Data>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     columns,
     data,
@@ -72,11 +81,14 @@ export function DataTable<Data extends object>({
           <Tr key={row.id}>
             {row.getVisibleCells().map((cell) => {
               // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
-              const meta: any = cell.column.columnDef.meta;
+              const meta = cell.column.columnDef.meta;
               return (
+                // @ts-expect-error
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                <Td key={cell.id} isNumeric={meta?.isNumeric}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                <Td key={cell.id} isNumeric={meta?.isNumeric} pl={4} pr={2}>
+                  <Text noOfLines={1} minWidth={32}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Text>
                 </Td>
               );
             })}

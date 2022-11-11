@@ -203,15 +203,67 @@ export const application = {
 
 // for the submissions table:
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const exampleSubmission = {
+const exampleSubmission1 = {
   user: "325h2pojfds", // user id
   application: "3lhnl253", // application id
   submitted: true,
   fields: {
     "First Name": "Anish",
-    "Essay #1": "alwkejhlkajgh",
-    "Application Stage": "Accepted",
+    "Last Name": "ASDF",
+    Email: "anish@berkeley.edu",
+    "Major(s)": "EECS",
+    "Year in School": "2nd",
+    "Developer or Designer": "DEVELOPER",
+    Bootcamp: "NO",
+    "Why WDB?": "fafdafdgdafd",
+    "Development Problem": "fdafgda",
+    "Website with poor experience": "fdafdafd",
+    "Positive contribution to a team": "alwkejhlkajgh",
+    "Dev/Design preference": "fadsfdaf",
     "Branch Preference": ["Industry", "Design", "Bootcamp"],
+    "Development Technologies": "multiple",
+    "Design Technologies": "anish@berkeley.edu",
+    "Other Time Commitments": "anish@berkeley.edu",
+    "GM Time": "anish@berkeley.edu",
+    "DeCal Consideration": "anish@berkeley.edu",
+    "Previously in Decal": "anish@berkeley.edu",
+    "Potential Roster": "fadfafda",
+    "Anything else": "fafnafjhfd",
+    LinkedIn: "fadfafda",
+    GitHub: "NfadfaafdO",
+    "Personal Website/Portfolio": "fadfdfafda",
+  },
+};
+
+const exampleSubmission2 = {
+  user: "325h2pojfds", // user id
+  application: "3lhnl253", // application id
+  submitted: true,
+  fields: {
+    "First Name": "Kartik",
+    "Last Name": "Aggarawl",
+    Email: "anish@berkeley.edu",
+    "Major(s)": "EECS",
+    "Year in School": "2nd",
+    "Developer or Designer": "DEVELOPER",
+    Bootcamp: "NO",
+    "Why WDB?": "fafdafdgdafd",
+    "Development Problem": "fdafgda",
+    "Website with poor experience": "fdafdafd",
+    "Positive contribution to a team": "alwkejhlkajgh",
+    "Dev/Design preference": "fadsfdaf",
+    "Branch Preference": ["Industry", "Design", "Bootcamp"],
+    "Development Technologies": "multiple",
+    "Design Technologies": "anish@berkeley.edu",
+    "Other Time Commitments": "anish@berkeley.edu",
+    "GM Time": "anish@berkeley.edu",
+    "DeCal Consideration": "anish@berkeley.edu",
+    "Previously in Decal": "anish@berkeley.edu",
+    "Potential Roster": "fadfafda",
+    "Anything else": "fafnafjhfd",
+    LinkedIn: "fadfafda",
+    GitHub: "NfadfaafdO",
+    "Personal Website/Portfolio": "fadfdfafda",
   },
 };
 

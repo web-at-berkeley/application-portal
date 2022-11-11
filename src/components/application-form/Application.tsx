@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Center, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 
 import { useQuery } from "../../../convex/_generated/react";
@@ -16,36 +16,41 @@ export default function Application({ id }: ApplicationProps) {
   const [latestCompletedStep, setLatestCompletedStep] = useState(0);
   const application = useQuery("getApplication", id);
   const submission = useQuery("getSubmission", id);
-  if (!application || submission === undefined) {
-    return <Box>loading...</Box>;
-  }
   return (
     <Box w="100vw">
       <Navbar />
-      <ApplicationProgressBar
-        stepNames={application.steps.map((step) => step.name)}
-        currentStep={currentStep}
-        onChange={setCurrentStep}
-        latestCompletedStep={latestCompletedStep}
-        id={id}
-      />
-      <footer
-        style={{
-          position: "fixed",
-          bottom: 0,
-          right: 0,
-          paddingRight: "16px",
-          width: "100%",
-        }}
-      >
-        <ApplicationNavigationButtons
-          currentStepUpdater={setCurrentStep}
-          lastCompletedStepUpdater={setLatestCompletedStep}
-          currentStep={currentStep}
-          lastCompletedStep={latestCompletedStep}
-          numSteps={application.steps.length}
-        />
-      </footer>
+      {!application || submission === undefined ? (
+        <Center mt="40vh">
+          <Spinner size="xl" color="convex.lightBlue" />
+        </Center>
+      ) : (
+        <>
+          <ApplicationProgressBar
+            stepNames={application.steps.map((step) => step.name)}
+            currentStep={currentStep}
+            onChange={setCurrentStep}
+            latestCompletedStep={latestCompletedStep}
+            id={id}
+          />
+          <footer
+            style={{
+              position: "fixed",
+              bottom: 0,
+              right: 0,
+              paddingRight: "16px",
+              width: "100%",
+            }}
+          >
+            <ApplicationNavigationButtons
+              currentStepUpdater={setCurrentStep}
+              lastCompletedStepUpdater={setLatestCompletedStep}
+              currentStep={currentStep}
+              lastCompletedStep={latestCompletedStep}
+              numSteps={application.steps.length}
+            />
+          </footer>
+        </>
+      )}
     </Box>
   );
 }
