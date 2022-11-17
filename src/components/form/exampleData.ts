@@ -6,9 +6,23 @@ export const application: Document<"applications"> = {
   title: "WDB Application",
   adminFields: [
     {
-      name: "Application Stage",
-      type: "multiSelect",
-      options: ["Interviewing", "Accepted", "Rejected"],
+      name: "In Consideration",
+      type: "checkbox",
+    },
+    {
+      name: "Bootcamp/Industry",
+      type: "multipleChoice",
+      options: ["Bootcamp", "Industry"],
+    },
+    {
+      name: "Interview Score",
+      type: "shortText",
+      maxLength: 100,
+    },
+    {
+      name: "Interview Notes",
+      type: "longText",
+      wordLimit: 300,
     },
   ],
   steps: [

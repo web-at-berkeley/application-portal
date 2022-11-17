@@ -66,6 +66,7 @@ export default mutation(
 
     if (submission === null) {
       const fieldsMap = createDefaultSubmission(application);
+      console.log(fieldsMap);
       fieldsMap.set(fieldName, fieldValue);
       await db.insert("submissions", {
         user: user._id,

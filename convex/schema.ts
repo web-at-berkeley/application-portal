@@ -295,6 +295,7 @@ export default defineSchema({
         s.object({
           name: s.string(),
           type: s.literal("longText"),
+          wordLimit: s.number(),
         }),
         s.object({
           name: s.string(),

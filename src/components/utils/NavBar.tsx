@@ -1,13 +1,17 @@
-import { Box, Flex, HStack, Avatar, Text, VStack } from "@chakra-ui/react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Avatar, Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
+
+import PlainLink from "./PlainLink";
 
 export default function Navbar() {
+  const { user } = useAuth0();
   return (
     <Box as="section">
-      <Box as="nav" bg="purple.100">
+      <Box as="nav" bg="#DEDBFF">
         <HStack spacing="7" py={{ base: "4", lg: "5" }} justify="space-between">
-          <Box paddingStart="3vw">
+          <PlainLink href="/" paddingLeft="3vw">
             <svg
-              width="110"
+              width="100"
               height="40"
               viewBox="0 0 130 47"
               fill="none"
@@ -39,22 +43,18 @@ export default function Navbar() {
                 />
               </defs>
             </svg>
-          </Box>
+          </PlainLink>
           <Flex justify="space-between" flex="1">
-            <HStack spacing="3" marginStart="70vw">
-              <Avatar
-                size="md"
-                marginLeft="3vw"
-                src="https://avatars.githubusercontent.com/u/70179315?v=4"
-              />
-              <VStack spacing="0" paddingLeft="1px">
+            <HStack spacing="3" marginStart="calc(100% - 270px)">
+              <Avatar size="md" marginLeft="3vw" src={user!.picture} />
+              <Stack spacing="0" paddingLeft="1px">
                 <Text fontSize="sm" color="black" fontWeight="extrabold">
-                  Sanjeev
+                  {user!.given_name + " " + user!.family_name}
                 </Text>
-                <Text fontSize="sm" color="white" fontWeight="bold">
+                <Text fontSize="sm" color="grey" fontWeight="bold">
                   Admin
                 </Text>
-              </VStack>
+              </Stack>
             </HStack>
           </Flex>
         </HStack>

@@ -9,9 +9,7 @@ export default query(
     applicationId: string,
     submissionID?: string
   ): Promise<Document<"submissions"> | null> => {
-    console.log("submissionID", submissionID);
     const identity = await auth.getUserIdentity();
-    console.log("identity", identity);
 
     if (!identity) {
       throw new Error("Called getSubmission without authentication present");
@@ -45,12 +43,10 @@ export default query(
         .first();
       return submission;
     }
-    let user: Document<"users"> | null;
-    user = await db
+    const user: Document<"users"> | null = await db
       .query("users")
       .filter((q) => q.eq(q.field("tokenIdentifier"), identity.tokenIdentifier))
       .first();
-    console.log("submissionID", submissionID);
 
     if (!user) {
       throw new Error("User is not in the database!");
@@ -75,7 +71,7 @@ export default query(
       .query("submissions")
       .filter((q) =>
         q.and(
-          q.eq(q.field("user"), user!._id),
+          q.eq(q.field("user"), user._id),
           q.eq(q.field("application"), application._id)
         )
       )

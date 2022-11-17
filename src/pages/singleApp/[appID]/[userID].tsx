@@ -3,6 +3,7 @@ import {
   Box,
   Center,
   Flex,
+  HStack,
   Spinner,
   Tab,
   TabList,
@@ -13,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import { useQuery } from "../../../../convex/_generated/react";
+import Form from "../../../components/form/Form";
 import Summary from "../../../components/form/Summary";
 import ButtonLink from "../../../components/utils/ButtonLink";
 import Navbar from "../../../components/utils/NavBar";
@@ -40,15 +42,15 @@ export default function SingleApplicationPage({ params }: ParamsProp) {
             <Flex direction="row">
               <Box paddingTop="5px">
                 <Text fontWeight="bold" fontSize="x-large">
-                  Applicant Name
+                  Applicant Info
                 </Text>
               </Box>
-              <Box marginStart="63vw">
+              <HStack ml="calc(100% - 500px)">
                 <ButtonLink
-                  bg="purple.100"
+                  bg="#F3F2FF"
                   href="/"
                   variant="grey"
-                  marginRight="2vw"
+                  marginRight="1vw"
                 >
                   <Flex direction="row">
                     <EmailIcon />
@@ -57,7 +59,7 @@ export default function SingleApplicationPage({ params }: ParamsProp) {
                     </Text>
                   </Flex>
                 </ButtonLink>
-                <ButtonLink bg="purple.100" href="/" variant="grey">
+                <ButtonLink bg="#F3F2FF" href="/" variant="grey">
                   <Flex direction="row">
                     <DeleteIcon />
                     <Text marginLeft="10px" fontWeight="bold">
@@ -65,23 +67,33 @@ export default function SingleApplicationPage({ params }: ParamsProp) {
                     </Text>
                   </Flex>
                 </ButtonLink>
-              </Box>
+              </HStack>
             </Flex>
           </Box>
           <Box marginLeft="3vw" marginTop="1vw" marginEnd="50vw">
             <Tabs>
               <TabList>
                 <Tab>Application Progress</Tab>
-                <Tab>Admin Field</Tab>
+                <Tab>Admin Fields</Tab>
                 <Tab>Submission</Tab>
               </TabList>
 
               <TabPanels>
                 <TabPanel>
-                  <p>view one tbd</p>
+                  {/* TODO: application progress */}
+                  <Center mt={12}>
+                    <Spinner size="xl" color="convex.lightBlue" />
+                  </Center>
                 </TabPanel>
                 <TabPanel>
-                  <p>view two tbd</p>
+                  <Box ml={-12} mt={2} mr={0} w="110%">
+                    <Form
+                      step=""
+                      id={params.appID}
+                      userID={params.userID}
+                      isDisabled={false}
+                    />
+                  </Box>
                 </TabPanel>
                 <TabPanel ml={-8} my={4}>
                   <Summary

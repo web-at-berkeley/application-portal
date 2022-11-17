@@ -1,6 +1,8 @@
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import {
+  Center,
   chakra,
+  Checkbox,
   Table,
   Tbody,
   Td,
@@ -50,18 +52,21 @@ export function DataTable<Data extends object>({
               const meta: any = header.column.columnDef.meta;
               return (
                 <Th
+                  bg="#F3F2FF"
                   key={header.id}
                   onClick={header.column.getToggleSortingHandler()}
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                   isNumeric={meta?.isNumeric}
                   color="black"
+                  pl={4}
+                  pr={4}
                 >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
                   )}
 
-                  <chakra.span pl="4">
+                  <chakra.span>
                     {header.column.getIsSorted() ? (
                       header.column.getIsSorted() === "desc" ? (
                         <TriangleDownIcon aria-label="sorted descending" />
@@ -85,10 +90,27 @@ export function DataTable<Data extends object>({
               return (
                 // @ts-expect-error
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                <Td key={cell.id} isNumeric={meta?.isNumeric} pl={4} pr={2}>
-                  <Text noOfLines={1} minWidth={32}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Text>
+                <Td key={cell.id} isNumeric={meta?.isNumeric} pl={4} pr={4}>
+                  {typeof cell.getValue() === "boolean" ? (
+                    <Center>
+                      <Checkbox
+                        colorScheme="purple"
+                        key={cell.id}
+                        checked={cell.getValue() as boolean}
+                        defaultChecked={cell.getValue() as boolean}
+                      />
+                    </Center>
+                  ) : (
+                    <Text
+                      noOfLines={1}
+                      minWidth={cell.column.columnDef.header === "" ? 0 : 120}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Text>
+                  )}
                 </Td>
               );
             })}

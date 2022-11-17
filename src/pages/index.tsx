@@ -1,13 +1,13 @@
-import { Box, Stack, Heading } from "@chakra-ui/layout";
+import { Box, Heading, HStack, Stack } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import Head from "next/head";
 import { ReactNode, useState } from "react";
 
 import { useMutation } from "../../convex/_generated/react";
-import ButtonLink from "../components/utils/ButtonLink";
-import NextLink from "../components/utils/NextLink";
 import { Logout } from "../components/auth/Logout";
+import ButtonLink from "../components/utils/ButtonLink";
 import Navbar from "../components/utils/NavBar";
+import NextLink from "../components/utils/NextLink";
 
 export default function Home() {
   const [child, setChild] = useState<object | null>(null);
@@ -17,11 +17,11 @@ export default function Home() {
     <>
       <Navbar />
       <Head>
-        <title>TODO: page title</title>
+        <title>WDB Application Portal</title>
       </Head>
       <Stack p={4}>
+        <Heading>WDB Application Portal</Heading>
         <Logout />
-        <Heading>WDB Next.js Template</Heading>
         <Box>
           <Button variant="blue" onClick={() => setChild({})}>
             {(child as ReactNode) ?? "Test error handling"}
@@ -50,6 +50,26 @@ export default function Home() {
             Create Application (test)
           </Button>
         </Box>
+        <HStack position="relative" top={12}>
+          <ButtonLink
+            href="/application/zrUQPf98OeGetO4sgrD18su"
+            variant="blue"
+          >
+            Application Page
+          </ButtonLink>
+          <ButtonLink
+            href="/submissions/zrUQPf98OeGetO4sgrD18su"
+            variant="blue"
+          >
+            Admin Table Page
+          </ButtonLink>
+          <ButtonLink
+            href="/singleApp/zrUQPf98OeGetO4sgrD18su/BSMWqstYIimcNgs7w2f4sfw"
+            variant="blue"
+          >
+            Single Applicant View
+          </ButtonLink>
+        </HStack>
       </Stack>
     </>
   );

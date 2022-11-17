@@ -42,7 +42,10 @@ export default query(
     }
     // TODO filter validation
     const submissions: Document<"submissions">[] = (
-      await db.query("submissions").collect()
+      await db
+        .query("submissions")
+        .filter((q) => q.eq(q.field("application"), application._id))
+        .collect()
     ).filter(
       (submission) =>
         !argumentsModifiers?.filters ||

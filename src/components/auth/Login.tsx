@@ -1,18 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 
 export function Login() {
-  const { isLoading, loginWithRedirect } = useAuth0();
-  if (isLoading) {
-    return <button className="btn btn-primary">Loading...</button>;
-  }
+  const { loginWithRedirect } = useAuth0();
+  loginWithRedirect();
   // TODO: this is a placeholder
   return (
-    <Box p={5}>
-      <Heading>Custom Login Text Here</Heading>
-      <Box>
-        <Button onClick={loginWithRedirect}>Log in</Button>
-      </Box>
-    </Box>
+    <Center mt="50vh">
+      <Spinner color="convex.lightBlue" />
+    </Center>
   );
 }

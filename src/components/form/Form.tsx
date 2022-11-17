@@ -10,7 +10,10 @@ import MultiChoice from "./MultiChoice";
 import MultiSelect from "./MultiSelect";
 import ShortText from "./ShortText";
 
-type Field = Document<"applications">["steps"][number]["fields"][number];
+type ApplicationField =
+  Document<"applications">["steps"][number]["fields"][number];
+type AdminField = Document<"applications">["adminFields"][number];
+type Field = ApplicationField | AdminField;
 
 interface FormProps {
   step: string;
@@ -22,20 +25,32 @@ interface FormProps {
 // TODO: add support for upload
 export default function Form({ step, id, isDisabled, userID }: FormProps) {
   const application = useQuery("getApplication", id)!;
-  const questions: Field[] = application.steps.filter((obj) => {
-    return obj.name === step;
-  })[0].fields;
+  let questions: Field[];
+  const isAdminFields = !isDisabled && userID !== undefined;
+  if (isAdminFields) {
+    questions = application.adminFields;
+  } else {
+    questions = application.steps.filter((obj) => {
+      return obj.name === step;
+    })[0].fields;
+  }
 
   const fields = useSubmissionFields(application, userID);
-
   const uploadAutoSaveData = useMutation(
     "updateSubmission"
   ).withOptimisticUpdate((localStore, id, fieldName, fieldValue) => {
-    const currentValue = localStore.getQuery("getSubmission", [id]);
+    const currentValue = localStore.getQuery(
+      "getSubmission",
+      userID ? [id, userID] : [id]
+    );
     if (currentValue) {
       const newCurrentValue = { ...currentValue };
       newCurrentValue.fields.set(fieldName, fieldValue);
-      localStore.setQuery("getSubmission", [id], newCurrentValue);
+      localStore.setQuery(
+        "getSubmission",
+        userID ? [id, userID] : [id],
+        newCurrentValue
+      );
     }
   });
 
@@ -49,14 +64,20 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
 
   const form: JSX.Element[] = [];
   questions.forEach((field) => {
+    const title = isAdminFields
+      ? field.name
+      : (field as ApplicationField).title;
+    const description = isAdminFields
+      ? ""
+      : (field as ApplicationField).description;
     switch (field.type) {
       case "shortText":
         form.push(
           <ShortText
             key={field.name}
             name={field.name}
-            title={field.title}
-            description={field.description}
+            title={title}
+            description={description}
             maxLen={field.maxLength}
             value={fields[field.name] as string}
             isDisabled={isDisabled}
@@ -68,8 +89,8 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
           <LongText
             key={field.name}
             name={field.name}
-            title={field.title}
-            description={field.description}
+            title={title}
+            description={description}
             wordLimit={field.wordLimit}
             value={fields[field.name] as string}
             isDisabled={isDisabled}
@@ -81,8 +102,8 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
           <MultiChoice
             key={field.name}
             name={field.name}
-            title={field.title}
-            description={field.description}
+            title={title}
+            description={description}
             options={field.options}
             value={fields[field.name] as string}
             isDisabled={isDisabled}
@@ -94,8 +115,8 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
           <MultiSelect
             key={field.name}
             name={field.name}
-            title={field.title}
-            description={field.description}
+            title={title}
+            description={description}
             options={field.options}
             value={fields[field.name] as string[]}
             isDisabled={isDisabled}
@@ -107,8 +128,8 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
           <CheckBox
             key={field.name}
             name={field.name}
-            title={field.title}
-            description={field.description}
+            title={title}
+            description={description}
             checked={fields[field.name] as boolean}
             isDisabled={isDisabled}
           />

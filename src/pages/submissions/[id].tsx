@@ -3,7 +3,6 @@ import {
   Box,
   Center,
   Flex,
-  Heading,
   HStack,
   Icon,
   IconButton,
@@ -23,7 +22,9 @@ import { HiEllipsisHorizontal } from "react-icons/hi2";
 
 import { useQuery } from "../../../convex/_generated/react";
 import { DataTable } from "../../components/admin/DataTable";
+import DesktopOnly from "../../components/utils/DesktopOnly";
 import Navbar from "../../components/utils/NavBar";
+import PlainLink from "../../components/utils/PlainLink";
 
 interface MapSchemaTypes {
   shortText: string;
@@ -58,27 +59,30 @@ export default function Submissions({ params }: ParamsProp) {
   }
 
   const applicationTypes = asSchema(
-    application.steps.reduce((ac, currentValue) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const currentStep = Object.assign(
-        {},
-        ...currentValue.fields.map((field) => {
-          return { [field.name]: field.type };
-        })
-      );
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return {
-        ...ac,
-        ...currentStep,
-      };
-    }, {})
+    [...application.steps, { fields: application.adminFields }].reduce(
+      (ac, currentValue) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const currentStep = Object.assign(
+          {},
+          ...currentValue.fields.map((field) => {
+            return { [field.name]: field.type };
+          })
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return {
+          ...ac,
+          ...currentStep,
+        };
+      },
+      {}
+    )
   );
 
   type Application = MapSchema<typeof applicationTypes>;
 
   const columnHelper = createColumnHelper<Application>();
 
-  const fieldNames = application.steps
+  const fieldNames = [...application.steps, { fields: application.adminFields }]
     .map((step) => {
       return step.fields.map((field) => {
         return field.name;
@@ -86,14 +90,7 @@ export default function Submissions({ params }: ParamsProp) {
     })
     .flat();
 
-  const columns = fieldNames.map((field) => {
-    return columnHelper.accessor(field, {
-      cell: (info) => info.getValue(),
-      header: field,
-    });
-  });
-
-  columns.push(
+  const columns = [
     columnHelper.accessor("button", {
       header: "",
       cell: () => {
@@ -104,50 +101,62 @@ export default function Submissions({ params }: ParamsProp) {
               icon={<HiEllipsisHorizontal />}
               aria-label="Options"
               backgroundColor="transparent"
+              maxW="20px"
             />
             <MenuList>
-              <MenuItem>Show Profile</MenuItem>
+              <PlainLink
+                href="/singleApp/zrUQPf98OeGetO4sgrD18su/BSMWqstYIimcNgs7w2f4sfw"
+                w="100%"
+              >
+                <MenuItem>Show Profile</MenuItem>
+              </PlainLink>
               <MenuItem>Delete Profile</MenuItem>
             </MenuList>
           </Menu>
         );
       },
-    })
-  );
+    }),
+    ...fieldNames.map((field) => {
+      return columnHelper.accessor(field, {
+        cell: (info) => info.getValue(),
+        header: field,
+      });
+    }),
+  ];
 
   return (
     <Box>
       <Navbar />
-      <Flex direction="column" margin="4rem">
-        <Heading as="h3" size="lg" marginBottom="2rem" fontWeight="medium">
-          WDBs Applicant Data
-        </Heading>
+      <Flex direction="column" mx="4rem" my="3rem">
         <Flex justify="space-between">
           <Text
             fontSize="2xl"
             marginLeft="1rem"
             marginBottom="1.5rem"
-            fontWeight="medium"
+            fontWeight="bold"
           >
-            Applicants
+            APPLICANTS
           </Text>
           <HStack spacing={4} marginRight="1rem">
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <Search2Icon color="black" />
-              </InputLeftElement>
-              <Input
-                type="text"
-                placeholder="Keyword Search"
-                borderRadius="2xl"
-              />
-            </InputGroup>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <Icon as={GrFilter} color="black" />
-              </InputLeftElement>
-              <Input type="text" placeholder="Filters" borderRadius="2xl" />
-            </InputGroup>
+            <DesktopOnly>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <Search2Icon color="black" />
+                </InputLeftElement>
+                <Input
+                  type="text"
+                  placeholder="Keyword Search"
+                  borderRadius="2xl"
+                />
+              </InputGroup>
+
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <Icon as={GrFilter} color="black" />
+                </InputLeftElement>
+                <Input type="text" placeholder="Filters" borderRadius="2xl" />
+              </InputGroup>
+            </DesktopOnly>
           </HStack>
         </Flex>
         <Flex width="100%" overflowX="scroll">
