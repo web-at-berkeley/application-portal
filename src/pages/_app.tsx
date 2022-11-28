@@ -1,28 +1,27 @@
-import { AppProps } from "next/app";
+import { WarningTwoIcon } from "@chakra-ui/icons";
 import {
+  Center,
   ChakraProvider,
-  useDisclosure,
   Modal,
+  ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  ModalBody,
-  ModalFooter,
-  Center,
+  useDisclosure,
 } from "@chakra-ui/react";
-import NextNProgress from "nextjs-progressbar";
-import { ErrorBoundary } from "react-error-boundary";
-import { WarningTwoIcon } from "@chakra-ui/icons";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithAuth0 } from "convex/react-auth0";
+import { AppProps } from "next/app";
+import NextNProgress from "nextjs-progressbar";
+import { ErrorBoundary } from "react-error-boundary";
 
 import convexConfig from "../../convex.json";
-import clientConfig from "../../convex/_generated/clientConfig";
-import { theme } from "../utils/theme";
-import { Login } from "../components/auth/Login";
 import AuthProtector from "../components/auth/AuthProtector";
+import { Login } from "../components/auth/Login";
+import { theme } from "../utils/theme";
 
-const convex = new ConvexReactClient(clientConfig);
+const convex = new ConvexReactClient({ address: convexConfig.prodUrl });
 const authInfo = convexConfig.authInfo[0];
 
 export default function ConvexApp({ Component, pageProps }: AppProps) {

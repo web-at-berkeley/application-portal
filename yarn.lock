@@ -1308,15 +1308,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@convex-dev/common@npm:0.3.1":
-  version: 0.3.1
-  resolution: "@convex-dev/common@npm:0.3.1"
-  dependencies:
-    base64-js: ^1.5.1
-  checksum: a4ee0cde6931cdebadb7ce61d420c1b0a67391a0fb9157de1a0429b6fdc46e9339e325fd9f042a0e128fe51ae49685f86893c3cb3ca0688a9a6ac1648a1727be
-  languageName: node
-  linkType: hard
-
 "@ctrl/tinycolor@npm:^3.4.0":
   version: 3.4.1
   resolution: "@ctrl/tinycolor@npm:3.4.1"
@@ -2723,11 +2714,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"convex@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "convex@npm:0.3.1"
+"convex@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "convex@npm:0.5.0"
   dependencies:
-    "@convex-dev/common": 0.3.1
     base64-js: ^1.5.1
     encoding: ^0.1.13
     esbuild: ^0.14.16
@@ -2746,7 +2736,7 @@ __metadata:
       optional: true
   bin:
     convex: bin/main.js
-  checksum: e1769b6751f7f2f8760b9b976a41ccf438aba6a7e3bee4bfc1722723019b142e1add86a368b252ba59b1e389985568e0b9960f3f3d431af6d043567543dfb10c
+  checksum: b8337482ac346796c976b406e077f0cd2ad2dd63283c5411add4e8b397bfe05741d17c2db66948ac5a121d655a83e1042be11d2a8e784aaf6bc50f6e2f2d4dcb
   languageName: node
   linkType: hard
 
@@ -2765,7 +2755,7 @@ __metadata:
     "@types/react": 18.0.18
     "@typescript-eslint/eslint-plugin": ^5.36.2
     "@typescript-eslint/parser": ^5.36.2
-    convex: ^0.3.1
+    convex: ^0.5.0
     depcheck: ^1.4.3
     eslint: ^8.23.0
     eslint-config-next: 12.2.5

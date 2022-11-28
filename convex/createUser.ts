@@ -1,5 +1,5 @@
-import { mutation } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { mutation } from "./_generated/server";
 
 export default mutation(async ({ db }): Promise<Id<"users">> => {
   // TODO: this is a placeholder
