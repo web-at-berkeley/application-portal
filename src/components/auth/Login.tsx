@@ -4,7 +4,6 @@ import { Center, Spinner } from "@chakra-ui/react";
 export function Login() {
   const { loginWithRedirect } = useAuth0();
   loginWithRedirect();
-  // TODO: this is a placeholder
   return (
     <Center mt="50vh">
       <Spinner color="convex.lightBlue" />

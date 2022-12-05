@@ -1,7 +1,6 @@
-import { GenericId } from "convex/values";
-
-import { Document } from "./_generated/dataModel";
+import { Document, Id } from "./_generated/dataModel";
 import { query } from "./_generated/server";
+import { getUser, isAdmin } from "./common";
 
 export default query(
   async (
@@ -10,7 +9,7 @@ export default query(
     // Optional parameters
     argumentsModifiers?: {
       sorting?: {
-        order: string;
+        order: "asc" | "desc";
         field: string;
       };
       filters?: {
@@ -18,13 +17,22 @@ export default query(
         value: string | boolean | string[];
       }[];
       fieldsToInclude?: string[];
+      keyword?: string;
     }
   ) => {
-    const identity = await auth.getUserIdentity();
-    if (!identity) {
-      throw new Error(
-        "Called getAllSubmissions without authentication present"
-      );
+    const user = await getUser({ db, auth });
+    if (user === null) {
+      throw new Error("User does not exist in DB!");
+    }
+
+    const userIsAdmin = await isAdmin(
+      db,
+      user._id,
+      new Id<"applications">("applications", applicationId)
+    );
+
+    if (!userIsAdmin) {
+      throw new Error("User not admin for application!");
     }
 
     const application: Document<"applications"> | null = await db
@@ -32,31 +40,58 @@ export default query(
       .filter((q) =>
         q.eq(
           q.field("_id"),
-          new GenericId<"applications">("applications", applicationId)
+          new Id<"applications">("applications", applicationId)
         )
       )
       .first();
 
     if (!application) {
-      throw new Error("application does not exist");
+      throw new Error("Application does not exist");
     }
-    // TODO filter validation
+
     const submissions: Document<"submissions">[] = (
-      await db
-        .query("submissions")
-        .filter((q) => q.eq(q.field("application"), application._id))
-        .collect()
-    ).filter(
-      (submission) =>
-        !argumentsModifiers?.filters ||
-        argumentsModifiers.filters.every(
-          (filter) => submission.fields.get(filter.name) === filter.value
-        )
-    );
+      await db.query("submissions").collect()
+    ).filter((submission) => {
+      let matchesFilters = true;
+      if (argumentsModifiers?.keyword) {
+        const keyword = argumentsModifiers.keyword.toLowerCase();
+        matchesFilters &&= Array.from(submission.fields.values()).some(
+          (value) => value.toString().toLowerCase().includes(keyword)
+        );
+      }
+      if (argumentsModifiers?.filters) {
+        for (const filter of argumentsModifiers.filters) {
+          matchesFilters &&=
+            submission.fields.get(filter.name) === filter.value;
+        }
+      }
+      return matchesFilters;
+    });
 
-    // .map((s) => {});
-    // .sort(() => ())
+    if (argumentsModifiers?.sorting) {
+      submissions.sort((a, b) => {
+        const fieldA = a.fields.get(argumentsModifiers.sorting!.field)!;
+        const fieldB = b.fields.get(argumentsModifiers.sorting!.field)!;
+        return (
+          (argumentsModifiers.sorting!.order === "asc" ? 1 : -1) *
+          fieldA.toString().localeCompare(fieldB.toString())
+        );
+      });
+    }
 
-    return submissions;
+    return submissions.map((submission) => {
+      if (argumentsModifiers?.fieldsToInclude) {
+        return {
+          ...submission,
+          fields: new Map(
+            Array.from(submission.fields.entries()).filter(([key]) =>
+              argumentsModifiers?.fieldsToInclude?.includes(key)
+            )
+          ),
+        };
+      } else {
+        return submission;
+      }
+    });
   }
 );

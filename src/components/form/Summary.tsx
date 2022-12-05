@@ -5,9 +5,9 @@ import Form from "./Form";
 interface SummaryProps {
   stepNames: string[];
   id: string;
-  userID?: string;
+  submissionId?: string;
 }
-export default function Summary({ stepNames, id, userID }: SummaryProps) {
+export default function Summary({ stepNames, id, submissionId }: SummaryProps) {
   return (
     <>
       {stepNames.map((stepName, index) => (
@@ -40,8 +40,13 @@ export default function Summary({ stepNames, id, userID }: SummaryProps) {
               {stepName}
             </Text>
           </HStack>
-          {userID ? (
-            <Form step={stepName} id={id} userID={userID} isDisabled />
+          {submissionId ? (
+            <Form
+              step={stepName}
+              id={id}
+              submissionId={submissionId}
+              isDisabled
+            />
           ) : (
             <Form step={stepName} id={id} isDisabled />
           )}

@@ -1,52 +1,19 @@
-import { GenericId } from "convex/values";
-
-import { Document } from "./_generated/dataModel";
+import { getUser, isAdmin } from "./common";
+import { Document, Id } from "./_generated/dataModel";
 import { query } from "./_generated/server";
 
 export default query(
   async (
     { db, auth },
     applicationId: string,
-    submissionID?: string
+    submissionID?: string,
+    deleting?: boolean
   ): Promise<Document<"submissions"> | null> => {
-    const identity = await auth.getUserIdentity();
-
-    if (!identity) {
-      throw new Error("Called getSubmission without authentication present");
+    if (deleting) {
+      return null;
     }
 
-    if (submissionID) {
-      const application: Document<"applications"> | null = await db
-        .query("applications")
-        .filter((q) =>
-          q.eq(
-            q.field("_id"),
-            new GenericId<"applications">("applications", applicationId)
-          )
-        )
-        .first();
-      if (!application) {
-        throw new Error("application does not exist");
-      }
-      // Check if we've already stored this identity before.
-      const submission: Document<"submissions"> | null = await db
-        .query("submissions")
-        .filter((q) =>
-          q.and(
-            q.eq(
-              q.field("_id"),
-              new GenericId<"submissions">("submissions", submissionID)
-            ),
-            q.eq(q.field("application"), application._id)
-          )
-        )
-        .first();
-      return submission;
-    }
-    const user: Document<"users"> | null = await db
-      .query("users")
-      .filter((q) => q.eq(q.field("tokenIdentifier"), identity.tokenIdentifier))
-      .first();
+    const user: Document<"users"> | null = await getUser({ db, auth });
 
     if (!user) {
       throw new Error("User is not in the database!");
@@ -57,7 +24,7 @@ export default query(
       .filter((q) =>
         q.eq(
           q.field("_id"),
-          new GenericId<"applications">("applications", applicationId)
+          new Id<"applications">("applications", applicationId)
         )
       )
       .first();
@@ -66,7 +33,33 @@ export default query(
       throw new Error("application does not exist");
     }
 
-    // Check if we've already stored this identity before.
+    if (submissionID) {
+      if (
+        !(await isAdmin(
+          db,
+          user._id,
+          new Id<"applications">("applications", applicationId)
+        ))
+      ) {
+        throw new Error("User is not an admin for this application!");
+      }
+
+      const submission: Document<"submissions"> | null = await db
+        .query("submissions")
+        .filter((q) =>
+          q.and(
+            q.eq(
+              q.field("_id"),
+              new Id<"submissions">("submissions", submissionID)
+            ),
+            q.eq(q.field("application"), application._id)
+          )
+        )
+        .first();
+
+      return submission;
+    }
+
     const submission: Document<"submissions"> | null = await db
       .query("submissions")
       .filter((q) =>

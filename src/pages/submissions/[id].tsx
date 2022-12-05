@@ -4,7 +4,6 @@ import {
   Center,
   Flex,
   HStack,
-  Icon,
   IconButton,
   Input,
   InputGroup,
@@ -17,11 +16,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { createColumnHelper } from "@tanstack/react-table";
-import { GrFilter } from "react-icons/gr";
+import { useEffect, useState } from "react";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
 
-import { useQuery } from "../../../convex/_generated/react";
-import { DataTable } from "../../components/admin/DataTable";
+import { Document } from "../../../convex/_generated/dataModel";
+import { useMutation, useQuery } from "../../../convex/_generated/react";
+import { DataTable, Sorting } from "../../components/admin/DataTable";
 import DesktopOnly from "../../components/utils/DesktopOnly";
 import Navbar from "../../components/utils/NavBar";
 import PlainLink from "../../components/utils/PlainLink";
@@ -48,8 +48,29 @@ interface ParamsProp {
 }
 
 export default function Submissions({ params }: ParamsProp) {
+  const [keyword, setKeyword] = useState("");
+  const [sorting, setSorting] = useState<Sorting | undefined>();
+  const [fieldsToInclude, setFieldsToInclude] = useState<
+    string[] | undefined
+  >();
+  const [submissions, setSubmissions] = useState<
+    Document<"submissions">[] | undefined
+  >();
+
   const application = useQuery("getApplication", params.id);
-  const submissions = useQuery("getAllSubmissions", params.id);
+  const queriedSubmissions = useQuery("getAllSubmissions", params.id, {
+    keyword,
+    ...(sorting ? { sorting } : {}),
+    ...(fieldsToInclude ? { fieldsToInclude } : {}),
+  });
+  const deleteSubmission = useMutation("deleteSubmission");
+
+  useEffect(() => {
+    if (queriedSubmissions) {
+      setSubmissions(queriedSubmissions);
+    }
+  }, [queriedSubmissions]);
+
   if (!application || !submissions) {
     return (
       <Center mt="50vh">
@@ -93,7 +114,7 @@ export default function Submissions({ params }: ParamsProp) {
   const columns = [
     columnHelper.accessor("button", {
       header: "",
-      cell: () => {
+      cell: (ctx) => {
         return (
           <Menu>
             <MenuButton
@@ -104,24 +125,38 @@ export default function Submissions({ params }: ParamsProp) {
               maxW="20px"
             />
             <MenuList>
-              <PlainLink
-                href="/singleApp/zrUQPf98OeGetO4sgrD18su/BSMWqstYIimcNgs7w2f4sfw"
-                w="100%"
+              <MenuItem>
+                <PlainLink
+                  href={`/single-submission/${params.id}/${submissions[
+                    ctx.row.index
+                  ]._id.toString()}`}
+                  fontWeight="normal"
+                >
+                  Show Profile
+                </PlainLink>
+              </MenuItem>
+              <MenuItem
+                onClick={() =>
+                  deleteSubmission(submissions[ctx.row.index]._id.toString())
+                }
               >
-                <MenuItem>Show Profile</MenuItem>
-              </PlainLink>
-              <MenuItem>Delete Profile</MenuItem>
+                Delete Profile
+              </MenuItem>
             </MenuList>
           </Menu>
         );
       },
     }),
-    ...fieldNames.map((field) => {
-      return columnHelper.accessor(field, {
-        cell: (info) => info.getValue(),
-        header: field,
-      });
-    }),
+    ...fieldNames
+      .filter(
+        (fieldName) => !fieldsToInclude || fieldsToInclude.includes(fieldName)
+      )
+      .map((field) => {
+        return columnHelper.accessor(field, {
+          cell: (info) => info.getValue(),
+          header: field,
+        });
+      }),
   ];
 
   return (
@@ -130,9 +165,9 @@ export default function Submissions({ params }: ParamsProp) {
       <Flex direction="column" mx="4rem" my="3rem">
         <Flex justify="space-between">
           <Text
-            fontSize="2xl"
+            fontSize="3xl"
             marginLeft="1rem"
-            marginBottom="1.5rem"
+            marginBottom="0.5rem"
             fontWeight="bold"
           >
             APPLICANTS
@@ -144,17 +179,14 @@ export default function Submissions({ params }: ParamsProp) {
                   <Search2Icon color="black" />
                 </InputLeftElement>
                 <Input
+                  w="400px"
+                  mb="1.5rem"
                   type="text"
                   placeholder="Keyword Search"
                   borderRadius="2xl"
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
                 />
-              </InputGroup>
-
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <Icon as={GrFilter} color="black" />
-                </InputLeftElement>
-                <Input type="text" placeholder="Filters" borderRadius="2xl" />
               </InputGroup>
             </DesktopOnly>
           </HStack>
@@ -162,7 +194,22 @@ export default function Submissions({ params }: ParamsProp) {
         <Flex width="100%" overflowX="scroll">
           <DataTable
             columns={columns}
-            data={submissions?.map((s) => Object.fromEntries(s.fields)) ?? []}
+            fieldNames={fieldNames}
+            data={
+              submissions?.map((s) =>
+                Object.fromEntries(
+                  Array.from(s.fields.entries()).filter(
+                    ([field]) =>
+                      fieldsToInclude === undefined ||
+                      fieldsToInclude.includes(field)
+                  )
+                )
+              ) ?? []
+            }
+            sorting={sorting}
+            onSortingChange={setSorting}
+            fieldsToInclude={fieldsToInclude}
+            onFieldsToIncludeChange={setFieldsToInclude}
           />
         </Flex>
       </Flex>

@@ -37,7 +37,6 @@ export default function MultiSelect({
           <CheckboxGroup
             colorScheme="gray"
             {...props}
-            // TODO: fix checkbox groups
             // @ts-expect-error
             name={name}
             value={value}

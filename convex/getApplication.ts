@@ -1,6 +1,4 @@
-import { GenericId } from "convex/values";
-
-import { Document } from "./_generated/dataModel";
+import { Document, Id } from "./_generated/dataModel";
 import { query } from "./_generated/server";
 
 export default query(
@@ -18,7 +16,7 @@ export default query(
       .filter((q) =>
         q.eq(
           q.field("_id"),
-          new GenericId<"applications">("applications", applicationId)
+          new Id<"applications">("applications", applicationId)
         )
       )
       .first();

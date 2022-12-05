@@ -19,14 +19,18 @@ interface FormProps {
   step: string;
   id: string;
   isDisabled: boolean;
-  userID?: string;
+  submissionId?: string;
 }
 
-// TODO: add support for upload
-export default function Form({ step, id, isDisabled, userID }: FormProps) {
+export default function Form({
+  step,
+  id,
+  isDisabled,
+  submissionId,
+}: FormProps) {
   const application = useQuery("getApplication", id)!;
   let questions: Field[];
-  const isAdminFields = !isDisabled && userID !== undefined;
+  const isAdminFields = !isDisabled && submissionId !== undefined;
   if (isAdminFields) {
     questions = application.adminFields;
   } else {
@@ -35,20 +39,20 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
     })[0].fields;
   }
 
-  const fields = useSubmissionFields(application, userID);
+  const fields = useSubmissionFields(application, submissionId);
   const uploadAutoSaveData = useMutation(
     "updateSubmission"
   ).withOptimisticUpdate((localStore, id, fieldName, fieldValue) => {
     const currentValue = localStore.getQuery(
       "getSubmission",
-      userID ? [id, userID] : [id]
+      submissionId ? [id, submissionId] : [id]
     );
     if (currentValue) {
       const newCurrentValue = { ...currentValue };
       newCurrentValue.fields.set(fieldName, fieldValue);
       localStore.setQuery(
         "getSubmission",
-        userID ? [id, userID] : [id],
+        submissionId ? [id, submissionId] : [id],
         newCurrentValue
       );
     }
@@ -58,7 +62,8 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
     uploadAutoSaveData(
       id,
       e.target.name,
-      e.target.type === "checkbox" ? e.target.checked : e.target.value
+      e.target.type === "checkbox" ? e.target.checked : e.target.value,
+      false
     );
   };
 
@@ -141,7 +146,7 @@ export default function Form({ step, id, isDisabled, userID }: FormProps) {
     <FormControl onChange={handleAutoSave}>
       <Stack
         spacing="30px"
-        width={userID ? "100%" : "850px"}
+        width={submissionId ? "105%" : "850px"}
         margin="0 auto"
         padding="0 50px"
       >

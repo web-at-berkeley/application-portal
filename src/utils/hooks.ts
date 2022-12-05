@@ -5,13 +5,16 @@ import { createDefaultSubmission } from ".";
 
 export function useSubmissionFields(
   application: Document<"applications">,
-  userID?: string
+  submissionId?: string
 ) {
   let submission;
-  if (userID) {
-    // TODO: figure out how to do this while following hook rules
+  if (submissionId) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    submission = useQuery("getSubmission", application._id.toString(), userID);
+    submission = useQuery(
+      "getSubmission",
+      application._id.toString(),
+      submissionId
+    );
   } else {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     submission = useQuery("getSubmission", application._id.toString());

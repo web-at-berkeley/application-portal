@@ -15,6 +15,7 @@ export default function Document() {
           rel="stylesheet"
         />
         <link rel="icon" type="image/x-icon" href="favicon.ICO" />
+        <title>WDB Application Portal</title>
       </Head>
       <body>
         <Main />

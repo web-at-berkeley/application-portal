@@ -10,12 +10,14 @@
  */
 
 import type { ApiFromModules } from "convex/api";
-import type * as autoSaveData from "../autoSaveData";
+import type * as addNote from "../addNote";
+import type * as common from "../common";
+import type * as createAdmin from "../createAdmin";
 import type * as createApplication from "../createApplication";
-import type * as createUser from "../createUser";
+import type * as deleteSubmission from "../deleteSubmission";
 import type * as getAllSubmissions from "../getAllSubmissions";
 import type * as getApplication from "../getApplication";
-import type * as getAutoSaveData from "../getAutoSaveData";
+import type * as getNotes from "../getNotes";
 import type * as getSubmission from "../getSubmission";
 import type * as storeUser from "../storeUser";
 import type * as updateSubmission from "../updateSubmission";
@@ -30,12 +32,14 @@ import type * as updateSubmission from "../updateSubmission";
  * `ConvexReactClient` to create app-specific types.
  */
 export type API = ApiFromModules<{
-  autoSaveData: typeof autoSaveData;
+  addNote: typeof addNote;
+  common: typeof common;
+  createAdmin: typeof createAdmin;
   createApplication: typeof createApplication;
-  createUser: typeof createUser;
+  deleteSubmission: typeof deleteSubmission;
   getAllSubmissions: typeof getAllSubmissions;
   getApplication: typeof getApplication;
-  getAutoSaveData: typeof getAutoSaveData;
+  getNotes: typeof getNotes;
   getSubmission: typeof getSubmission;
   storeUser: typeof storeUser;
   updateSubmission: typeof updateSubmission;

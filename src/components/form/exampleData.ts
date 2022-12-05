@@ -1,8 +1,9 @@
-import { Document, Id } from "../../../convex/_generated/dataModel";
+import { Document } from "../../../convex/_generated/dataModel";
 
-export const application: Document<"applications"> = {
-  _id: "j24tox2p4023ln" as unknown as Id<"applications">,
-  _creationTime: 0,
+export const exampleApplication: Omit<
+  Document<"applications">,
+  "_id" | "_creationTime"
+> = {
   title: "WDB Application",
   adminFields: [
     {

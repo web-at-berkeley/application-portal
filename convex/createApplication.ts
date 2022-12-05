@@ -1,16 +1,20 @@
-import { application } from "../src/components/form/exampleData";
+import { exampleApplication } from "../src/components/form/exampleData";
 
+import { getUser } from "./common";
 import { mutation } from "./_generated/server";
 
 export default mutation(async ({ db, auth }) => {
-  const identity = await auth.getUserIdentity();
-  if (!identity) {
-    throw new Error("Called createApplication without authentication present");
+  const user = await getUser({ db, auth });
+  if (!user) {
+    throw new Error("User is not in the database!");
   }
 
-  // TODO: this is currently hard-coded to the example application data
-  // eventually, we need a way to pass in the application data
-  const { _id, _creationTime, ...exampleApplication } = application;
+  // This is currently using example application data but can be
+  // changed to use data from other sources, like a form builder.
+  const applicationId = await db.insert("applications", exampleApplication);
 
-  db.insert("applications", exampleApplication);
+  db.insert("admins", {
+    userId: user._id,
+    application: applicationId,
+  });
 });

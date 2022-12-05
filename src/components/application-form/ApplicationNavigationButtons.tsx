@@ -1,11 +1,14 @@
 import { Box, Button, HStack } from "@chakra-ui/react";
 
+import { useMutation } from "../../../convex/_generated/react";
+
 interface ApplicationNavigationButtonsProps {
   currentStepUpdater: React.Dispatch<React.SetStateAction<number>>;
   lastCompletedStepUpdater: React.Dispatch<React.SetStateAction<number>>;
   currentStep: number;
   lastCompletedStep: number;
   numSteps: number;
+  id: string;
 }
 
 export default function ApplicationNavigationButtons({
@@ -14,10 +17,13 @@ export default function ApplicationNavigationButtons({
   currentStep,
   numSteps,
   lastCompletedStep,
+  id,
 }: ApplicationNavigationButtonsProps) {
   const handleBack = () => {
     currentStepUpdater((prev) => prev - 1);
   };
+
+  const updateSubmission = useMutation("updateSubmission");
 
   const handleNext = () => {
     if (currentStep < numSteps) {
@@ -25,6 +31,8 @@ export default function ApplicationNavigationButtons({
       if (currentStep === lastCompletedStep) {
         lastCompletedStepUpdater((prev) => prev + 1);
       }
+    } else {
+      updateSubmission(id, "", "", true);
     }
   };
 
