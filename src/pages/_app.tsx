@@ -17,11 +17,12 @@ import NextNProgress from "nextjs-progressbar";
 import { ErrorBoundary } from "react-error-boundary";
 
 import convexConfig from "../../convex.json";
+import clientConfig from "../../convex/_generated/clientConfig";
 import AuthProtector from "../components/auth/AuthProtector";
 import { Login } from "../components/auth/Login";
 import { theme } from "../utils/theme";
 
-const convex = new ConvexReactClient({ address: convexConfig.prodUrl });
+const convex = new ConvexReactClient(clientConfig);
 const authInfo = convexConfig.authInfo[0];
 
 export default function ConvexApp({ Component, pageProps }: AppProps) {
