@@ -8,8 +8,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import Note, { NoteProps } from "./Note";
 import AddNote from "./AddNote";
+import Note, { NoteProps } from "./Note";
 
 interface NoteViewProps {
   submissionId: string;
@@ -35,11 +35,17 @@ export default function NoteView({ submissionId, notes }: NoteViewProps) {
         isVisible={showAddNote}
         onClose={() => setShowAddNote(false)}
       />
-      <Stack divider={<StackDivider />}>
-        {notes.map((note) => (
-          <Note key={note._id.toString()} note={note} />
-        ))}
-      </Stack>
+      {notes.length > 0 ? (
+        <Stack divider={<StackDivider />}>
+          {notes.map((note) => (
+            <Note key={note._id.toString()} note={note} />
+          ))}
+        </Stack>
+      ) : (
+        <Text fontStyle="italic" pt={2}>
+          No notes yet...
+        </Text>
+      )}
     </Stack>
   );
 }

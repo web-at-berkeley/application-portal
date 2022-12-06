@@ -72,7 +72,7 @@ export const exampleApplication: Omit<
           description:
             "If you believe you do not meet these requirements, we highly encourage you to apply to our introduction to Fullstack Development DeCal Developer requirements: Some experience with either frontend or backend For frontend, this can look like experience with a popular frontend framework such as React, Vue, Angular, etc. For backend, this can look like experience with common backend frameworks such as Node, Django, etc. Designer requirements Some experience with designing in Figma, Adobe Creative Cloud, or any other design tools. If you are interested in both, please indicate that below and fill out the short answer questions for both roles. By applying as a developer or designer, you will be considered for both WDB’s product bootcamp and industry initiative. Unsure whether or not you meet these requirements? Contact webatberkeley@gmail.com",
           type: "multipleChoice",
-          options: ["First", "Second", "Third", "Fourth", "Fifth or more"],
+          options: ["Developer", "Designer", "Both"],
         },
         {
           name: "Bootcamp",

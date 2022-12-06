@@ -18,12 +18,9 @@ export default query(
       throw new Error("User does not exist in DB!");
     }
 
-    const submission = await db
-      .query("submissions")
-      .filter((q) =>
-        q.eq(q.field("_id"), new Id<"submissions">("submissions", submissionId))
-      )
-      .first();
+    const submission = await db.get(
+      new Id<"submissions">("submissions", submissionId)
+    );
 
     if (submission === null) {
       throw new Error("Submission does not exist in DB!");
@@ -37,16 +34,13 @@ export default query(
 
     const notes: Document<"notes">[] = await db
       .query("notes")
+      .withIndex("by_submissionId", (q) => q.eq("submissionId", submissionId))
       .order("desc")
-      .filter((q) => q.eq(q.field("submissionId"), submissionId))
       .collect();
     return Promise.all(
       notes.map(async ({ userId, ...note }) => ({
         ...note,
-        user: (await db
-          .query("users")
-          .filter((q) => q.eq(q.field("_id"), submission.user))
-          .first())!,
+        user: (await db.get(submission.user))!,
       }))
     );
   }

@@ -1,4 +1,4 @@
-import { Search2Icon } from "@chakra-ui/icons";
+import { InfoIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Center,
@@ -13,6 +13,9 @@ import {
   MenuItem,
   MenuList,
   Spinner,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
   Text,
 } from "@chakra-ui/react";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -162,7 +165,15 @@ export default function Submissions({ params }: ParamsProp) {
   return (
     <Box>
       <Navbar />
-      <Flex direction="column" mx="4rem" my="3rem">
+      <Tag ml="4rem" mt="3rem">
+        <TagLeftIcon boxSize="12px" as={InfoIcon} />
+        <TagLabel>
+          To view a single applicant&apos;s details, click on the three dots
+          next to one of the submissions. You can also click on one of the
+          column headers to hide columns and change sorting options.
+        </TagLabel>
+      </Tag>
+      <Flex direction="column" mx="4rem" my="2rem">
         <Flex justify="space-between">
           <Text
             fontSize="3xl"

@@ -1,4 +1,4 @@
-import { Heading, HStack, Stack, Flex, Spacer, Text } from "@chakra-ui/layout";
+import { Flex, Heading, HStack, Spacer, Stack, Text } from "@chakra-ui/layout";
 
 import { Logout } from "../components/auth/Logout";
 import ButtonLink from "../components/utils/ButtonLink";
@@ -15,8 +15,22 @@ export default function Home() {
           <Logout />
         </Flex>
         <Text fontSize="lg" pt={8}>
-          Welcome to the WDB Application Portal, built with Convex! Use the
-          buttons below to navigate the demo site:
+          Welcome to the WDB (Web Development at Berkeley) Application Portal,
+          built with Convex!
+          <br /> <br />
+          This is a demo version of the app, so you're an automatically added as
+          an admin for all applications just by logging in (although you would
+          normally enable the proper security logic for a production version of
+          the application).
+          <br /> <br />
+          All data within the app is synced in real-time thanks to Convex,
+          meaning the application form is automatically saved when you edit, and
+          multiple admins can view and edit the same submission at the same
+          time!
+          <br /> <br />
+          To submit an application, click the button on the left. To view the
+          list of all application submissions and view details about a
+          particular user's submission, click the button on the right.
         </Text>
         <HStack position="relative" top={12}>
           <ButtonLink

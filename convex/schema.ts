@@ -104,10 +104,10 @@ export default defineSchema({
   admins: defineTable({
     userId: s.id("users"),
     application: s.id("applications"),
-  }),
+  }).index("by_userAndApplication", ["userId", "application"]),
   notes: defineTable({
     submissionId: s.string(),
     userId: s.string(),
     noteContents: s.string(),
-  }),
+  }).index("by_submissionId", ["submissionId"]),
 });

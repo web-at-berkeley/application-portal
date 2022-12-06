@@ -1,6 +1,6 @@
+import { getUser, isAdmin } from "./common";
 import { Document, Id } from "./_generated/dataModel";
 import { query } from "./_generated/server";
-import { getUser, isAdmin } from "./common";
 
 export default query(
   async (
@@ -35,15 +35,9 @@ export default query(
       throw new Error("User not admin for application!");
     }
 
-    const application: Document<"applications"> | null = await db
-      .query("applications")
-      .filter((q) =>
-        q.eq(
-          q.field("_id"),
-          new Id<"applications">("applications", applicationId)
-        )
-      )
-      .first();
+    const application: Document<"applications"> | null = await db.get(
+      new Id<"applications">("applications", applicationId)
+    );
 
     if (!application) {
       throw new Error("Application does not exist");

@@ -1,8 +1,8 @@
 import { createDefaultSubmission } from "../src/utils";
 
+import { getUser } from "./common";
 import { Document, Id } from "./_generated/dataModel";
 import { mutation } from "./_generated/server";
-import { getUser } from "./common";
 
 export default mutation(
   async (
@@ -18,15 +18,9 @@ export default mutation(
       throw new Error("User is not in the database!");
     }
 
-    const application: Document<"applications"> | null = await db
-      .query("applications")
-      .filter((q) =>
-        q.eq(
-          q.field("_id"),
-          new Id<"applications">("applications", applicationId)
-        )
-      )
-      .first();
+    const application: Document<"applications"> | null = await db.get(
+      new Id<"applications">("applications", applicationId)
+    );
 
     if (!application) {
       throw new Error("application does not exist");
@@ -35,11 +29,8 @@ export default mutation(
     // Check if we've already stored this submission before.
     const submission: Document<"submissions"> | null = await db
       .query("submissions")
-      .filter((q) =>
-        q.and(
-          q.eq(q.field("user"), user._id),
-          q.eq(q.field("application"), application._id)
-        )
+      .withIndex("by_userAndApplication", (q) =>
+        q.eq("user", user._id).eq("application", application._id)
       )
       .first();
 

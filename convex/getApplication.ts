@@ -11,14 +11,6 @@ export default query(
       throw new Error("Called getApplication without authentication present");
     }
 
-    return await db
-      .query("applications")
-      .filter((q) =>
-        q.eq(
-          q.field("_id"),
-          new Id<"applications">("applications", applicationId)
-        )
-      )
-      .first();
+    return await db.get(new Id<"applications">("applications", applicationId));
   }
 );

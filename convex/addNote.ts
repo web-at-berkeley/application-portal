@@ -14,12 +14,9 @@ export default mutation(
       throw new Error("User does not exist in DB!");
     }
 
-    const submission = await db
-      .query("submissions")
-      .filter((q) =>
-        q.eq(q.field("_id"), new Id<"submissions">("submissions", submissionId))
-      )
-      .first();
+    const submission = await db.get(
+      new Id<"submissions">("submissions", submissionId)
+    );
 
     if (submission === null) {
       throw new Error("Submission does not exist in DB!");

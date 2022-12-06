@@ -1,6 +1,6 @@
+import { getUser, isAdmin } from "./common";
 import { Document, Id } from "./_generated/dataModel";
 import { mutation } from "./_generated/server";
-import { getUser, isAdmin } from "./common";
 
 export default mutation(async ({ db, auth }, submissionId: string) => {
   const user: Document<"users"> | null = await getUser({ db, auth });
@@ -26,7 +26,7 @@ export default mutation(async ({ db, auth }, submissionId: string) => {
   // Delete associated notes
   const notes = await db
     .query("notes")
-    .filter((q) => q.eq(q.field("submissionId"), submissionId))
+    .withIndex("by_submissionId", (q) => q.eq("submissionId", submissionId))
     .collect();
 
   await Promise.all(notes.map((note) => db.delete(note._id)));

@@ -13,7 +13,7 @@ export default mutation(async ({ db, auth }) => {
   // changed to use data from other sources, like a form builder.
   const applicationId = await db.insert("applications", exampleApplication);
 
-  db.insert("admins", {
+  await db.insert("admins", {
     userId: user._id,
     application: applicationId,
   });

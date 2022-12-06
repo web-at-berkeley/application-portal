@@ -17,7 +17,9 @@ export const getUser = async ({
 
   return await db
     .query("users")
-    .filter((q) => q.eq(q.field("tokenIdentifier"), identity.tokenIdentifier))
+    .withIndex("by_tokenIdentifier", (q) =>
+      q.eq("tokenIdentifier", identity.tokenIdentifier)
+    )
     .first();
 };
 
@@ -28,13 +30,9 @@ export const isAdmin = async (
 ): Promise<boolean> => {
   const admin = await db
     .query("admins")
-    .filter((q) =>
-      q.and(
-        q.eq(q.field("userId"), user),
-        q.eq(q.field("application"), application)
-      )
+    .withIndex("by_userAndApplication", (q) =>
+      q.eq("userId", user).eq("application", application)
     )
     .first();
-  console.log(admin);
   return admin !== null;
 };
