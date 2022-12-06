@@ -1,39 +1,40 @@
-# WDB Next.js Template
+# WDB Application Portal
 
-Welcome to WDB's Next.js template! This project has a Next.js frontend set up but doesn't include a backend. It should usually only be used for static sites or projects where the backend functionality is embedded directly with the frontend (e.g. when using Firebase). For projects that need a normal backend, see the [monorepo template](https://github.com/web-at-berkeley/monorepo-template). It's pretty opinionated so feel free to make any changes to fit your project.
+Welcome to the WDB Application Portal demo repository! Our goal with this project was to create an application portal that would automatically save student applications and allow students to conveniently apply to multiple different Berkeley clubs on the same website. This app was built with [Convex](https://convex.dev) and showcases some of the platform's most valuable functionality, including real-time data sync and easy to use backend logic.
+
+There's a live version of the site at https://joinwdb.vercel.app/! This version has checks for admin access disabled so anyone can access the admin portal. See [here](https://github.com/web-at-berkeley/application-portal/blob/53b801e6153a7e43fc17c57a51fbf4b8fc1dce14/convex/common.ts#L38) for instructions on how to re-enable the proper security logic for a real-world app.
 
 # Getting Started
 
-For PMs: Click the green "Use this template" button at the top of this page to make a new repository for your project (it usually should be created under the WDB organization).
+If you you're looking to run this app locally, here's how to get started with development:
 
-Here's how to get started with development:
+1. Make sure you have [Node.js](https://nodejs.org/en/) installed.
+2. Clone the repository by running `git clone <your repository link>` in your terminal.
+3. Check if you have [Yarn](https://yarnpkg.com/) installed by running `yarn -v` in your terminal. If you don't have it installed, run `npm install -g yarn`.
+4. In the project directory, run `yarn` to install dependencies.
+5. Delete the existing `convex.json` file so that you'll be able to use your own Convex deployment.
+6. Run `npx convex dev` to run the Convex backend in development mode. The first time you run this command, you'll be prompted to create a free Convex account and project - you can follow the prompts to get this set up.
+7. Follow the steps [here](https://docs.convex.dev/using/users-and-auth) to get Auth0 set up with your own developer account, up until (and including) running `npx convex auth add` to add your Auth0 credentials to your Convex project.
+8. While Convex is running in development mode, run `yarn dev` at the same time to start the Next.js development server.
+9. Navigate to `localhost:3000` in your browser to see the app running!
+10. You'll need to seed the `applications` table with an application to use the other pages on the site. Navigate to `localhost:3000/seed` and click on the button to seed the database with an example WDB application. Then, update the `DEMO_APPLICATION_ID` variable in `src/pages/index.ts` to match the ID of the application you just created.
+11. That's it - you're ready to start developing!
 
-1. Make sure you have [Node.js](https://nodejs.org/en/) and [VS Code](https://code.visualstudio.com/download) installed.
-2. Clone the repository by running `git clone <your repository link>` in your terminal. Don't clone the template directly; instead clone the repository your PM made from the template.
-3. Open the project folder in VS Code.
-4. [Recommended] Navigate to the Extensions tab in VS Code and type "@recommended" in the search bar. Install all of the extensions listed under "Workspace Recommendations" section and restart VS Code if prompted. See the [Recommended Extensions](<#Recommended Extensions>) section for a list of the extensions and their descriptions.
-5. Check if you have [Yarn](https://yarnpkg.com/) installed by running `yarn -v` in your terminal. If you don't have it installed, run `npm install -g yarn`.
-6. In the project directory, run `yarn` to install dependencies.
-7. Run `yarn dev` to start the development server.
+# Scripts
 
-# Development Tasks
+Here's a list of scripts defined in `package.json` which can be run with `yarn <script>`:
 
-There are some initial development tasks which should be completed to set up the project. Many are marked with a "TODO" comment in the code, but here's the full list:
-
-1. Change the package name in `package.json`.
-2. Set up Chakra UI colors - change the 'TODO' key in the `colors` field found in [`src/utils/theme.ts`](src/utils/theme.ts) to a name that fits the project, like `politiq` or `weekly`. Replace the colors referenced by components (e.g. `color="TODO.blue"`) with the new name. Add any other colors that are used by the project. See [here](https://chakra-ui.com/docs/styled-system/theme#colors) for more info.
-3. Set up fonts - change the fonts listed in the `fonts` field found in [`src/utils/theme.ts`](src/utils/theme.ts) to whatever fonts you're using. As long as you still use Google Fonts, new fonts can be added by just changing the font name in the `link` tag found in [`src/pages/_document.tsx`](src/pages/_document.tsx) from Inter to another font.
-4. Change the color of the Next.js progress bar in [`src/pages/_app.tsx`](src/pages/_app.tsx) by changing the `color` prop of the `NextNProgress` component to fit with the project.
-5. [Recommended] Create Chakra UI component variants - if using a design system or if there's any component styles that are frequently reused (e.g. similar looking buttons, etc.), then create Chakra UI component variants for them in [`src/utils/theme.ts`](src/utils/theme.ts). See [here](https://chakra-ui.com/docs/styled-system/customize-theme#customizing-component-styles) for more info.
-6. Delete [`src/pages/test.tsx`](src/pages/test.tsx), and replace the contents of [`src/pages/index.tsx`](src/pages/index.tsx) and [`src/pages/404.tsx`](src/pages/404.tsx) since they're just placeholders.
-7. Make sure to include proper titles for each page in the site - see the `Head` component in [`src/pages/index.tsx`](src/pages/index.tsx) for an example.
-8. Replace the favicon at [`public/favicon.ico`](public/favicon.ico) with the project's favicon.
-9. Delete or replace [`public/images/logo.png`](public/images/logo.png) since it's an unused placeholder.
-10. [Optional] Customize the error modal in [`src/pages/_app.tsx`](src/pages/_app.tsx) if needed.
+- `yarn dev` - starts the development server
+- `yarn build` - builds the project for production
+- `yarn start` - starts the production server
+- `yarn lint` - runs ESLint and Prettier while also fixing any issues wherever possible
+- `yarn lint-ci` - runs ESLint and Prettier without fixing issues (used by GitHub Actions)
+- `yarn depcheck` - checks for unused dependencies (used by GitHub Actions)
+- `yarn clean` - deletes any files which are `.gitignore`'d but still exist in the project (including `node_modules`) - useful if you want to reset the project to a clean state or if you're having issues with dependencies. Keep in mind this will delete environment files like `.env.local` as well though, so back them up if needed.
 
 # Template Details
 
-There's a lot of different components in this template, so here's an overview of what's included and why:
+Below is an excerpt from the [WDB Next.js template README](https://github.com/web-at-berkeley/nextjs-template) that explains the structure of the rest of project and some the technologies we're using.
 
 ## Next.js
 
@@ -110,10 +111,6 @@ Rules can be disabled via [`eslint-disable-next-line`](https://eslint.org/docs/l
 
 [GitHub Actions](https://docs.github.com/en/actions) is used for CI (continuous integration). Any time code is pushed or a pull request to the `main` branch is opened, GitHub Actions will check the project for unused dependencies and errors from ESLint or Prettier. It will also check if the TypeScript types are valid and try to create a production build. If any of these checks fail, the commit/pull request will be marked as failing. The GitHub Actions workflow is defined in [`.github/workflows/main.yml`](.github/workflows/main.yml). It's recommended to only merge PRs which pass the checks.
 
-## Pull Request Template
-
-A pull request template in [`.github/pull_request_template.md`](.github/pull_request_template.md) is included. This autofills the description when making a PR on GitHub - feel free to modify it to fit the project.
-
 ## VS Code Settings
 
 Configuration files for for VS Code are inside [`.vscode`](.vscode). The [`settings.json`](.vscode/settings.json) file sets the default formatter to Prettier and enables automatically linting via ESLint whenever you save files. The [`extensions.json`](.vscode/extensions.json) file lists the recommended extensions for the project.
@@ -123,26 +120,3 @@ Configuration files for for VS Code are inside [`.vscode`](.vscode). The [`setti
 - [`.editorconfig`](.editorconfig) is used by the EditorConfig extension and contains settings which ensure consistent formatting for files, including indentation and newlines.
 - [`.gitattributes`](.gitattributes) also contains settings for consistent formatting, but is used by Git instead.
 - [`.env`](.env) should contain any environment variables used by the project. Since this is included in GitHub, **do not** put any sensitive information in here (e.g. API keys, etc.) and instead include them in an `.env.local` file.
-
-# Scripts
-
-Here's a list of scripts defined in `package.json` which can be run with `yarn <script>`:
-
-- `yarn dev` - starts the development server
-- `yarn build` - builds the project for production
-- `yarn start` - starts the production server
-- `yarn lint` - runs ESLint and Prettier while also fixing any issues wherever possible
-- `yarn lint-ci` - runs ESLint and Prettier without fixing issues (used by GitHub Actions)
-- `yarn depcheck` - checks for unused dependencies (used by GitHub Actions)
-- `yarn clean` - deletes any files which are `.gitignore`'d but still exist in the project (including `node_modules`) - useful if you want to reset the project to a clean state or if you're having issues with dependencies. Keep in mind this will delete environment files like `.env.local` as well though, so back them up if needed.
-
-# Recommended Extensions
-
-This is a list of recommended VS Code extensions that will make development easier. They're all included in `.vscode/extensions.json`.
-
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - enables running ESLint on save and shows errors and warnings in the editor
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - enables running Prettier on save and shows errors and warnings in the editor
-- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) - enables using `.editorconfig` files to ensure consistent formatting
-- [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) - enables syntax highlighting for `.env` files
-- [JavaScript Language Support](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel) - enables syntax highlighting for JavaScript/TypeScript files
-- [Auto Rename Tag](formulahendry.auto-rename-tag) - automatically renames matching opening and closing tags when you rename one of them (definitely the most optional one on this list)

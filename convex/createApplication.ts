@@ -17,4 +17,6 @@ export default mutation(async ({ db, auth }) => {
     userId: user._id,
     application: applicationId,
   });
+
+  return applicationId;
 });
