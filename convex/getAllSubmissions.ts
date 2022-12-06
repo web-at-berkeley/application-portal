@@ -44,7 +44,12 @@ export default query(
     }
 
     const submissions: Document<"submissions">[] = (
-      await db.query("submissions").collect()
+      await db
+        .query("submissions")
+        .withIndex("by_application", (q) =>
+          q.eq("application", application._id)
+        )
+        .collect()
     ).filter((submission) => {
       let matchesFilters = true;
       if (argumentsModifiers?.keyword) {

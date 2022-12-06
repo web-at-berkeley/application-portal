@@ -100,7 +100,9 @@ export default defineSchema({
       s.string(),
       s.union(s.string(), s.boolean(), s.array(s.string()))
     ),
-  }).index("by_userAndApplication", ["user", "application"]),
+  })
+    .index("by_application", ["application"])
+    .index("by_userAndApplication", ["user", "application"]),
   admins: defineTable({
     userId: s.id("users"),
     application: s.id("applications"),
