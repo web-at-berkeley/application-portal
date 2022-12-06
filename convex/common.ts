@@ -28,11 +28,15 @@ export const isAdmin = async (
   user: Id<"users">,
   application: Id<"applications">
 ): Promise<boolean> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const admin = await db
     .query("admins")
     .withIndex("by_userAndApplication", (q) =>
       q.eq("userId", user).eq("application", application)
     )
     .first();
-  return admin !== null;
+  // TODO: you should uncomment this line below to re-enable proper admin checking
+  // it's disabled here for purposes of the demo
+  // return admin !== null;
+  return true;
 };
